@@ -1,0 +1,18 @@
+# Entorno virtual
+.venv/
+venv/
+
+# Credenciales
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+
+# Configuración local
+.vscode/
+.idea/
