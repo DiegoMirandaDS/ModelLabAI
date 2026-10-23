@@ -108,6 +108,8 @@ Todas las respuestas recibidas exitosamente cumplieron la estructura JSON espera
 
 En consecuencia, la tasa global de solicitudes exitosas fue del 55,56 %, mientras que la validez estructural de las respuestas efectivamente recibidas fue del 100 % (5/5). Estas métricas evalúan aspectos diferentes y no deben confundirse.
 
+Los resultados anteriores corresponden a la primera evaluación. Posteriormente, mediante el sistema de registro acumulativo, se alcanzaron al menos tres respuestas estructuralmente válidas por cada prompt. Los resultados consolidados y actualizados se encuentran en src/prompts/registro_resultados.json.
+
 ### Revisión de la decisión
 
 Se mantiene `gemini-3.8-flash` como modelo preferido para futuras evaluaciones, debido a las capacidades que el proveedor atribuye a esta generación y a su potencial para tareas técnicas complejas. No obstante, las pruebas iniciales favorecen a Gemini 3.6 en latencia y tasa de solicitudes exitosas.
