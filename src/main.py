@@ -1,74 +1,60 @@
 
-"""Cliente HTTP para la API de Gemini."""
+"""Punto de entrada de ModelLab AI."""
 
-import os
+import sys
 
-import requests
-from dotenv import load_dotenv
-
-API_URL = (
-    "https://generativelanguage.googleapis.com"
-    "/v1beta/models/{model}:generateContent"
+from src.consumir_gemini import (
+    armar_peticion,
+    enviar_peticion,
+    extraer_texto,
+    calcular_costo,
 )
 
 
-def generar_explicacion(tema: str) -> str:
-    """Solicita una explicación educativa a Gemini."""
-    load_dotenv()
+PRECIO_ENTRADA = 0.75 / 1_000_000
+PRECIO_SALIDA = 3.75 / 1_000_000
 
-    api_key = os.getenv("GEMINI_API_KEY")
-    model = os.getenv("GEMINI_MODEL", "gemini-2.5-flash")
+SYSTEM_INSTRUCTION = (
+    "Eres ModelLab AI, un asistente educativo "
+    "especializado en Machine Learning. "
+    "Explica conceptos técnicos con precisión, "
+    "claridad y ejemplos cuando sean útiles. "
+    "No inventes resultados experimentales."
+)
 
-    if not api_key:
-        raise ValueError("Falta GEMINI_API_KEY en .env")
 
-    url = API_URL.format(model=model)
-
-    headers = {
-        "Content-Type": "application/json",
-        "x-goog-api-key": api_key,
-    }
-
-    payload = {
-        "contents": [
-            {
-                "parts": [
-                    {
-                        "text": (
-                            "Explica de manera breve y sencilla "
-                            f"el siguiente concepto: {tema}"
-                        )
-                    }
-                ]
-            }
-        ]
-    }
-
-    respuesta = requests.post(
-        url,
-        headers=headers,
-        json=payload,
-        timeout=60,
+def main():
+    pregunta = (
+        "Explica brevemente qué es el overfitting "
+        "y menciona dos formas de prevenirlo."
     )
 
-    print(f"HTTP Status: {respuesta.status_code}")
-    print(f"Respuesta de Google: {respuesta.text}")
+    url, headers, body = armar_peticion(
+        pregunta,
+        system_instruction=SYSTEM_INSTRUCTION,
+    )
 
-    respuesta.raise_for_status()
+    respuesta = enviar_peticion(url, headers, body)
 
-    datos = respuesta.json()
+    texto = extraer_texto(respuesta)
 
-    return datos["candidates"][0]["content"]["parts"][0]["text"]
+    costo = calcular_costo(
+        respuesta,
+        PRECIO_ENTRADA,
+        PRECIO_SALIDA,
+    )
+
+    print("\n=== ModelLab AI ===")
+    print("\nRespuesta del modelo:\n")
+    print(texto)
+
+    print(f"\nCosto estimado: USD {costo:.8f}")
+    print("\nProceso terminado correctamente.")
 
 
 if __name__ == "__main__":
     try:
-        resultado = generar_explicacion("Overfitting")
-        print("\nRespuesta de Gemini:\n")
-        print(resultado)
-    except (requests.RequestException, KeyError, IndexError) as error:
-        print(f"Error en la solicitud: {error}")
-        raise SystemExit(1)
-    except ValueError as error:
-        print(f"Error de configuración: {error}")
-        raise SystemExit(1)
+        main()
+    except (ValueError, RuntimeError, KeyError) as error:
+        print(f"Error: {error}", file=sys.stderr)
+        sys.exit(1)

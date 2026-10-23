@@ -1,43 +1,96 @@
+
 # ModelLab AI
 
-Proyecto en desarrollo enfocado en integrar inteligencia artificial generativa con herramientas de Machine Learning para facilitar el análisis e interpretación de modelos y resultados.
+ModelLab AI es un prototipo educativo de inteligencia artificial
+generativa orientado a facilitar la comprensión, diagnóstico e
+interpretación de modelos de Machine Learning.
+
+Desarrollado durante la Especialización en Desarrollo con IA
+Generativa de Skillnest.
 
 ## Tecnologías
 
 - Python 3
-- Google Gemini API
+- Google Gemini API mediante REST
 - Requests
+- python-dotenv
 - Git y GitHub
+- Graphviz
 - WSL2 / Ubuntu
-- Postman
 
-## Estado actual
+## Funcionalidades implementadas
 
-- [x] Configuración del entorno de desarrollo.
-- [x] Integración con Gemini mediante API REST.
-- [x] Manejo de variables de entorno.
-- [x] Pruebas de solicitudes HTTP con Postman.
-- [ ] Implementación de herramientas de análisis de ML.
-- [ ] Integración de agentes y RAG.
-- [ ] Desarrollo de interfaz de usuario.
+- Consumo de la API de Gemini
+- Manejo de errores HTTP y de conexión
+- Cálculo estimado de costos utilizando tokens
+- Comparación experimental de modelos
+- Prompts de sistema
+- Respuestas JSON estructuradas
+- Banco de prompts para Machine Learning
+- Pruebas de consistencia
 
-## Uso
+## Instalación
+
+Clonar el repositorio:
+
+```bash
+git clone https://github.com/DiegoMirandaDS/ModelLabAI.git
+cd ModelLabAI
+```
+
+Crear y activar el entorno virtual:
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+```
 
 Instalar dependencias:
 
 ```bash
-pip install -r requirements.txt
+python -m pip install -r requirements.txt
 ```
 
-Configurar `GEMINI_API_KEY` y `GEMINI_MODEL` en un archivo `.env`.
+## Configuración
 
-Ejecutar:
+Crear el archivo de entorno:
 
 ```bash
-python src/main.py
+cp .env.example .env
 ```
 
-## Pruebas
+Editar `.env` e ingresar una clave personal válida:
+
+```dotenv
+GEMINI_API_KEY=TU_CLAVE
+GEMINI_MODEL=gemini-3.8-flash
+```
+
+Nunca subir `.env` ni compartir la clave privada.
+
+## Ejecutar la aplicación
+
+Desde la raíz del repositorio:
+
+```bash
+python -m src.main
+```
+
+## Banco de prompts
+
+Ejecutar el experimento de consistencia:
+
+```bash
+python -m prompts.test_consistencia
+```
+
+El script genera:
+
+`prompts/registro_resultados.json`
+
+Cada prompt se prueba tres veces contra la API real.
+
+## Pruebas unitarias
 
 ```bash
 python -m unittest discover -s tests -v
@@ -45,12 +98,27 @@ python -m unittest discover -s tests -v
 
 ## Documentación
 
-La documentación y las pruebas de integración se encuentran en [`docs/`](docs/).
+- `docs/diagrama_arquitectura.png`: diagrama de la aplicación
+- `docs/diagrama_arquitectura.svg`: versión vectorial
+- `docs/arquitectura.dot`: código fuente del diagrama
+- `docs/comparacion_modelos.md`: benchmark experimental
+- `docs/decision-arquitectura.md`: decisión de modelo
 
-## Consideraciones
+## Seguridad
 
-El proyecto se realiza como parte de la evaluación del programa "Especialización en Desarrollo con IA Generativa de Skillnest".
+Las credenciales se administran mediante variables de entorno.
+El archivo `.env` se excluye del control de versiones mediante
+`.gitignore`.
+
+## Trabajo futuro
+
+- Análisis de métricas de modelos
+- Agentes de inteligencia artificial
+- RAG
+- API con FastAPI
+- Interfaz de usuario
 
 ## Autor
 
 Diego Miranda
+```
