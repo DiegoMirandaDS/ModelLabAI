@@ -1,0 +1,123 @@
+{
+  "fecha_utc": "2026-10-23T21:26:26.591882+00:00",
+  "modelo": "gemini-3.6-flash",
+  "repeticiones_por_prompt": 3,
+  "prompts": {
+    "diagnosticar_sobreajuste": {
+      "exitos": 2,
+      "fallos": 1,
+      "intentos": 3,
+      "consistencia_pct": 66.67,
+      "resultados": [
+        {
+          "intento": 1,
+          "estado": "exito",
+          "latencia_s": 3.615,
+          "respuesta": {
+            "diagnostico": "Sobreajuste (Overfitting)",
+            "confianza": 0.95,
+            "explicacion": "Existe una gran brecha entre la precisión de entrenamiento (0.98) y la de validación (0.71). Esto indica que el modelo ha memorizado los datos de entrenamiento pero falla al generalizar sobre datos no vistos."
+          }
+        },
+        {
+          "intento": 2,
+          "estado": "exito",
+          "latencia_s": 4.636,
+          "respuesta": {
+            "diagnostico": "Sobreajuste (Overfitting)",
+            "confianza": 0.95,
+            "explicacion": "Existe una brecha significativa entre la precisión de entrenamiento (0.98) y la de validación (0.71). Esto es un signo claro de sobreajuste o alta varianza, donde el modelo ha memorizado el conjunto de entrenamiento y no logra generalizar adecuadamente con datos nuevos."
+          }
+        },
+        {
+          "intento": 3,
+          "estado": "fallo",
+          "latencia_s": 2.416,
+          "error": "Gemini respondió con HTTP 503."
+        }
+      ]
+    },
+    "recomendar_mejoras": {
+      "exitos": 3,
+      "fallos": 0,
+      "intentos": 3,
+      "consistencia_pct": 100.0,
+      "resultados": [
+        {
+          "intento": 1,
+          "estado": "exito",
+          "latencia_s": 7.366,
+          "respuesta": {
+            "problema": "Sobreajuste (overfitting) e incapacidad de generalización del modelo Random Forest, evidenciado por una alta varianza entre el rendimiento en entrenamiento y en datos no vistos.",
+            "recomendaciones": [
+              "Limitar la profundidad máxima de los árboles reduciendo el hiperparámetro max_depth.",
+              "Incrementar los valores de min_samples_split y min_samples_leaf para evitar que los árboles creen hojas con muy pocas muestras.",
+              "Reducir el número de características evaluadas en cada división ajustando el hiperparámetro max_features.",
+              "Verificar si existe desbalance de clases y ajustar el parámetro class_weight o aplicar técnicas de rebalanceo (ej. SMOTE).",
+              "Utilizar validación cruzada estratificada (Stratified K-Fold) para la optimización de hiperparámetros mediante Grid Search o Random Search."
+            ],
+            "prioridad": "Alta"
+          }
+        },
+        {
+          "intento": 2,
+          "estado": "exito",
+          "latencia_s": 6.514,
+          "respuesta": {
+            "problema": "Sobreajuste (overfitting) en el modelo Random Forest, evidenciado por un alto rendimiento en el conjunto de entrenamiento y una degradación significativa del F1-score en datos no observados.",
+            "recomendaciones": [
+              "Limitar la profundidad máxima de los árboles mediante el hiperparámetro max_depth para reducir la complejidad del modelo.",
+              "Incrementar los valores de min_samples_split y min_samples_leaf para exigir un número mínimo de muestras antes de dividir un nodo o formar una hoja.",
+              "Ajustar el hiperparámetro max_features para reducir la correlación entre los árboles individuales introduciendo mayor aleatoriedad.",
+              "Validar la existencia de un desequilibrio de clases no abordado y aplicar class_weight='balanced' o ajustar el umbral de decisión para optimizar el F1-score.",
+              "Verificar que no exista fuga de datos (data leakage) del conjunto de prueba hacia el conjunto de entrenamiento durante el preprocesamiento."
+            ],
+            "prioridad": "alta"
+          }
+        },
+        {
+          "intento": 3,
+          "estado": "exito",
+          "latencia_s": 5.855,
+          "respuesta": {
+            "problema": "Sobreajuste (overfitting) en el modelo Random Forest, evidenciado por una alta brecha entre las métricas de entrenamiento y la degradación del F1-score en datos no vistos.",
+            "recomendaciones": [
+              "Limitar la profundidad máxima de los árboles utilizando el parámetro max_depth.",
+              "Aumentar los valores de min_samples_split y min_samples_leaf para regularizar los árboles individuales.",
+              "Ajustar el hiperparámetro max_features para reducir la correlación entre los árboles del ensamblado.",
+              "Utilizar búsqueda de hiperparámetros con validación cruzada estratificada (Stratified K-Fold).",
+              "Verificar si existe desbalance de clases y ajustar el parámetro class_weight a 'balanced'."
+            ],
+            "prioridad": "alta"
+          }
+        }
+      ]
+    },
+    "interpretar_metricas": {
+      "exitos": 0,
+      "fallos": 3,
+      "intentos": 3,
+      "consistencia_pct": 0.0,
+      "resultados": [
+        {
+          "intento": 1,
+          "estado": "fallo",
+          "latencia_s": 1.169,
+          "error": "Gemini respondió con HTTP 429."
+        },
+        {
+          "intento": 2,
+          "estado": "fallo",
+          "latencia_s": 1.161,
+          "error": "Gemini respondió con HTTP 429."
+        },
+        {
+          "intento": 3,
+          "estado": "fallo",
+          "latencia_s": 1.107,
+          "error": "Gemini respondió con HTTP 429."
+        }
+      ]
+    }
+  }
+}

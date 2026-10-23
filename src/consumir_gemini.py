@@ -2,6 +2,8 @@
 """Módulo reutilizable para consumir la API de Gemini."""
 
 import os
+import json
+import re
 
 import requests
 from dotenv import load_dotenv
@@ -9,8 +11,10 @@ from dotenv import load_dotenv
 load_dotenv()
 
 
-def armar_peticion(pregunta):
-    """Valida la entrada y prepara la solicitud HTTP."""
+
+def armar_peticion(pregunta, system_instruction=None, response_schema=None):
+    """Construye una petición REST a Gemini, con salida estructurada opcional."""
+
     if not isinstance(pregunta, str) or not pregunta.strip():
         raise ValueError("La pregunta debe ser un texto no vacío.")
 
@@ -18,19 +22,42 @@ def armar_peticion(pregunta):
     if not api_key:
         raise ValueError("Falta GEMINI_API_KEY en el archivo .env.")
 
-    modelo = os.getenv("GEMINI_MODEL", "gemini-2.5-flash")
+    modelo = os.getenv("GEMINI_MODEL", "gemini-3.8-flash")
+
     url = (
         "https://generativelanguage.googleapis.com"
         f"/v1beta/models/{modelo}:generateContent"
     )
 
-    headers = {"x-goog-api-key": api_key}
-    body = {
-        "contents": [{"parts": [{"text": pregunta}]}]
+    headers = {
+        "x-goog-api-key": api_key,
+        "Content-Type": "application/json",
     }
 
-    return url, headers, body
+    body = {
+        "contents": [
+            {
+                "parts": [
+                    {"text": pregunta}
+                ]
+            }
+        ]
+    }
 
+    if system_instruction is not None:
+        body["systemInstruction"] = {
+            "parts": [
+                {"text": system_instruction}
+            ]
+        }
+
+    if response_schema is not None:
+        body["generationConfig"] = {
+            "responseMimeType": "application/json",
+            "responseSchema": response_schema,
+        }
+
+    return url, headers, body
 
 def enviar_peticion(url, headers, body):
     """Envía la solicitud HTTP y convierte el JSON."""
@@ -101,6 +128,73 @@ def obtener_dato_de_prueba(pregunta):
     datos = enviar_peticion(url, headers, body)
     return extraer_texto(datos)
 
+
+def parsear_respuesta_json(texto, esquema):
+    """Convierte la respuesta en dict y valida claves y tipos esperados."""
+
+    texto = texto.strip()
+
+    texto = re.sub(r"^```(?:json)?\s*", "", texto)
+    texto = re.sub(r"\s*```$", "", texto)
+
+    try:
+        datos = json.loads(texto)
+    except json.JSONDecodeError as error:
+        raise ValueError(
+            "La respuesta del modelo no contiene JSON válido."
+        ) from error
+
+    if not isinstance(datos, dict):
+        raise ValueError("La respuesta debe ser un objeto JSON.")
+
+    propiedades = esquema.get("properties", {})
+    requeridas = esquema.get("required", [])
+
+    tipos = {
+        "STRING": str,
+        "NUMBER": (int, float),
+        "INTEGER": int,
+        "BOOLEAN": bool,
+        "ARRAY": list,
+        "OBJECT": dict,
+    }
+
+    for clave in requeridas:
+        if clave not in datos:
+            raise ValueError(f"Falta la clave requerida: {clave}")
+
+    for clave, valor in datos.items():
+        if clave not in propiedades:
+            raise ValueError(f"Clave inesperada: {clave}")
+
+        definicion = propiedades[clave]
+        tipo = definicion["type"]
+
+        if tipo == "NUMBER":
+            valido = (
+                isinstance(valor, (int, float))
+                and not isinstance(valor, bool)
+            )
+        elif tipo == "INTEGER":
+            valido = type(valor) is int
+        else:
+            valido = isinstance(valor, tipos[tipo])
+
+        if not valido:
+            raise ValueError(
+                f"La clave '{clave}' no tiene el tipo {tipo}."
+            )
+
+        if tipo == "ARRAY" and "items" in definicion:
+            tipo_items = definicion["items"]["type"]
+            esperado = tipos[tipo_items]
+
+            if not all(isinstance(item, esperado) for item in valor):
+                raise ValueError(
+                    f"Los elementos de '{clave}' no tienen el tipo esperado."
+                )
+
+    return datos
 
 if __name__ == "__main__":
     try:
