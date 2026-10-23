@@ -1,61 +1,65 @@
 
-import os
-import sys
+"""Pruebas del punto de entrada de ModelLab AI."""
+
 import unittest
-from pathlib import Path
-from unittest.mock import MagicMock, patch
+from unittest.mock import patch
 
-sys.path.insert(
-    0,
-    str(Path(__file__).resolve().parents[1] / "src"),
-)
-
-from main import generar_explicacion
+from src.main import main
 
 
-class TestGeminiAPI(unittest.TestCase):
+class TestMain(unittest.TestCase):
 
-    @patch("main.load_dotenv")
-    @patch.dict(os.environ, {}, clear=True)
-    def test_api_key_obligatoria(self, mock_dotenv):
-        with self.assertRaises(ValueError):
-            generar_explicacion("Machine learning")
+    @patch("src.main.calcular_costo")
+    @patch("src.main.extraer_texto")
+    @patch("src.main.enviar_peticion")
+    @patch("src.main.armar_peticion")
+    def test_main_exitoso(
+        self,
+        mock_armar,
+        mock_enviar,
+        mock_extraer,
+        mock_costo,
+    ):
+        """Comprueba que main coordina correctamente las funciones."""
 
-    @patch("main.load_dotenv")
-    @patch.dict(
-        os.environ,
-        {
-            "GEMINI_API_KEY": "clave-ficticia",
-            "GEMINI_MODEL": "gemini-2.5-flash",
-        },
-        clear=True,
-    )
-    @patch("main.requests.post")
-    def test_respuesta_exitosa(self, mock_post, mock_dotenv):
-        respuesta = MagicMock()
-        respuesta.status_code = 200
-        respuesta.json.return_value = {
+        mock_armar.return_value = (
+            "https://api.ejemplo.com",
+            {"x-goog-api-key": "clave-ficticia"},
+            {"contents": []},
+        )
+
+        mock_enviar.return_value = {
             "candidates": [
                 {
                     "content": {
                         "parts": [
-                            {"text": "Explicación de prueba"}
+                            {"text": "El overfitting es el sobreajuste."}
                         ]
                     }
                 }
-            ]
+            ],
+            "usageMetadata": {
+                "promptTokenCount": 10,
+                "candidatesTokenCount": 20,
+            },
         }
-        mock_post.return_value = respuesta
 
-        resultado = generar_explicacion("Overfitting")
+        mock_extraer.return_value = (
+            "El overfitting es el sobreajuste."
+        )
 
-        self.assertEqual(resultado, "Explicación de prueba")
-        mock_post.assert_called_once()
+        mock_costo.return_value = 0.0001
 
-        argumentos = mock_post.call_args
-        self.assertEqual(
-            argumentos.kwargs["headers"]["x-goog-api-key"],
-            "clave-ficticia",
+        with patch("builtins.print") as mock_print:
+            main()
+
+        mock_armar.assert_called_once()
+        mock_enviar.assert_called_once()
+        mock_extraer.assert_called_once()
+        mock_costo.assert_called_once()
+
+        mock_print.assert_any_call(
+            "El overfitting es el sobreajuste."
         )
 
 
