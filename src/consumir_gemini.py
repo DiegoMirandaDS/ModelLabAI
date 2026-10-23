@@ -79,6 +79,22 @@ def extraer_texto(datos):
     return texto
 
 
+def calcular_costo(datos, precio_entrada, precio_salida):
+    """Calcula el costo estimado de una petición en USD."""
+    uso = datos["usageMetadata"]
+
+    tokens_entrada = uso["promptTokenCount"]
+    tokens_salida = uso.get("candidatesTokenCount", 0)
+    tokens_razonamiento = uso.get("thoughtsTokenCount", 0)
+
+    costo = (
+        tokens_entrada * precio_entrada
+        + (tokens_salida + tokens_razonamiento) * precio_salida
+    )
+
+    return costo
+
+
 def obtener_dato_de_prueba(pregunta):
     """Coordina la petición y devuelve el texto generado."""
     url, headers, body = armar_peticion(pregunta)
