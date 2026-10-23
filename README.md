@@ -81,12 +81,12 @@ python -m src.main
 Ejecutar el experimento de consistencia:
 
 ```bash
-python -m prompts.test_consistencia
+python -m src.prompts.test_consistencia
 ```
 
 El script genera:
 
-`prompts/registro_resultados.json`
+`src/prompts/registro_resultados.json`
 
 Cada prompt se prueba tres veces contra la API real.
 
@@ -121,4 +121,3 @@ El archivo `.env` se excluye del control de versiones mediante
 ## Autor
 
 Diego Miranda
-```

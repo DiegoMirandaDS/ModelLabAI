@@ -63,7 +63,7 @@ Google posiciona este modelo para tareas complejas y flujos relacionados con ing
 
 En el contexto actual, ModelLab AI es un prototipo educativo que prioriza la exploración de capacidades sobre la respuesta inmediata.
 
-Si bien la prueba realizada favorece claramente a Gemini 3.6 en latencia (probablemente debido a problemas de saturación) y porcentaje de solicitudes exitosas, se considera que por un valor similar y conociendo que Gemini 3.8 es su evolución oficial, este es el modelo óptimo para el proyecto. Si se observa que durante pruebas en modulos futuros Gemini 3.8 sigue presentando problemas de solicitudes y latencia, se considerará el fallback a 3.6.
+Aunque Gemini 3.6 Flash presentó una menor latencia y mayor porcentaje de solicitudes exitosas en las pruebas iniciales, se mantiene la preferencia por Gemini 3.8 Flash para investigar su potencial en tareas de análisis técnico y Machine Learning. Esto debido a que el proveedor señala mediante benchmarks claras mejoras respecto a su predecesor. La selección definitiva dependerá de futuras evaluaciones de calidad, disponibilidad y rendimiento.
 
 ## 5. Alternativa descartada
 
@@ -84,3 +84,40 @@ Si Gemini 3.8 mantiene tasas elevadas de timeout o no ofrece ventajas significat
 - Evaluar escalabilidad y límites de cuota antes del despliegue.
 
 La arquitectura mantiene el modelo configurable mediante `GEMINI_MODEL`, facilitando comparaciones posteriores.
+
+## 7. Validación posterior y selección operativa del modelo
+
+**Fecha de evaluación:** 23 de octubre de 2026.
+
+Durante la implementación del banco de prompts de la Unidad U1.5 se intentó utilizar inicialmente `gemini-3.8-flash`, de acuerdo con la decisión arquitectónica original. Sin embargo, durante estas pruebas se presentaron reiterados errores HTTP 403 que impidieron continuar con la validación.
+
+Por este motivo, se utilizó `gemini-3.6-flash` como modelo operativo alternativo para completar el experimento, manteniendo los mismos prompts y esquemas de respuesta.
+
+### Resultados experimentales
+
+Se realizaron tres peticiones por cada uno de los tres prompts del banco, para un total de nueve intentos.
+
+| Prompt | Respuestas válidas | Fallos |
+|---|---:|---:|
+| Diagnosticar sobreajuste | 2/3 | 1 HTTP 503 |
+| Recomendar mejoras | 3/3 | 0 |
+| Interpretar métricas | 0/3 | 3 HTTP 429 |
+| **Total** | **5/9** | **4** |
+
+Todas las respuestas recibidas exitosamente cumplieron la estructura JSON esperada. Los fallos registrados corresponden a errores HTTP del servicio y no a respuestas con formatos inválidos.
+
+En consecuencia, la tasa global de solicitudes exitosas fue del 55,56 %, mientras que la validez estructural de las respuestas efectivamente recibidas fue del 100 % (5/5). Estas métricas evalúan aspectos diferentes y no deben confundirse.
+
+### Revisión de la decisión
+
+Se mantiene `gemini-3.8-flash` como modelo preferido para futuras evaluaciones, debido a las capacidades que el proveedor atribuye a esta generación y a su potencial para tareas técnicas complejas. No obstante, las pruebas iniciales favorecen a Gemini 3.6 en latencia y tasa de solicitudes exitosas.
+
+Por tanto, se adopta la siguiente decisión:
+
+- **Modelo preferido para evaluación futura:** `gemini-3.8-flash`.
+- **Modelo utilizado para validar el banco de prompts:** `gemini-3.6-flash`.
+- **Criterio de selección:** disponibilidad del servicio, calidad de respuesta, costo y latencia observada.
+
+La decisión original se mantiene como hipótesis técnica sujeta a nuevas mediciones. Se priorizará la disponibilidad y reproducibilidad del sistema durante las evaluaciones académicas.
+
+Los resultados completos se encuentran en [`src/prompts/registro_resultados.json`](../src/prompts/registro_resultados.json).

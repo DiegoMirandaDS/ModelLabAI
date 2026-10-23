@@ -17,7 +17,7 @@ from src.consumir_gemini import (
 )
 
 REPETICIONES = 3
-PAUSA_SEGUNDOS = 3
+PAUSA_SEGUNDOS = 10
 
 RUTA_RESULTADOS = (
     Path(__file__).resolve().parent
