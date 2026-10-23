@@ -1,125 +1,31 @@
 {
-  "fecha_utc": "2026-10-23T22:09:42.802081+00:00",
+  "actualizado_utc": "2026-10-23T22:45:22.876516+00:00",
   "modelo": "gemini-3.6-flash",
-  "repeticiones_por_prompt": 3,
+  "objetivo_exitos": 3,
   "prompts": {
     "diagnosticar_sobreajuste": {
-      "exitos": 2,
-      "fallos": 1,
-      "intentos": 3,
-      "consistencia_pct": 66.67,
-      "resultados": [
-        {
-          "intento": 1,
-          "estado": "exito",
-          "latencia_s": 4.006,
-          "respuesta": {
-            "diagnostico": "Sobreajuste (Overfitting)",
-            "confianza": 0.95,
-            "explicacion": "Existe una brecha significativa entre la precisión del entrenamiento (0.98) y la de validación (0.71), lo cual indica que el modelo ha memorizado los datos de entrenamiento y presenta una baja capacidad de generalización con datos no vistos."
-          }
-        },
-        {
-          "intento": 2,
-          "estado": "exito",
-          "latencia_s": 4.01,
-          "respuesta": {
-            "diagnostico": "Sobreajuste (Overfitting)",
-            "confianza": 0.95,
-            "explicacion": "Existe una brecha significativa entre la precisión de entrenamiento (0.98) y la de validación (0.71). Esto indica que el modelo ha memorizado los datos de entrenamiento y presenta baja capacidad de generalización ante datos no vistos."
-          }
-        },
-        {
-          "intento": 3,
-          "estado": "fallo",
-          "latencia_s": 2.124,
-          "error": "Gemini respondió con HTTP 503."
-        }
-      ]
+      "version_prompt": "53f7d2dcd8ac4a41",
+      "exitos": 4,
+      "fallos": 2,
+      "intentos": 6,
+      "objetivo_cumplido": true,
+      "exitos_pendientes": 0
     },
     "recomendar_mejoras": {
-      "exitos": 3,
+      "version_prompt": "0e46d9f5003ecd5d",
+      "exitos": 6,
       "fallos": 0,
-      "intentos": 3,
-      "consistencia_pct": 100.0,
-      "resultados": [
-        {
-          "intento": 1,
-          "estado": "exito",
-          "latencia_s": 6.974,
-          "respuesta": {
-            "problema": "Sobreajuste (overfitting) del modelo Random Forest, evidente por la brecha de rendimiento entre el conjunto de entrenamiento y el de prueba.",
-            "recomendaciones": [
-              "Regularizar la complejidad de los árboles reduciendo 'max_depth' e incrementando 'min_samples_split' y 'min_samples_leaf'.",
-              "Ajustar el hiperparámetro 'max_features' para reducir la correlación entre los árboles individuales.",
-              "Validar la ausencia de fuga de datos (data leakage) durante la fase de preprocesamiento o en las transformaciones de características.",
-              "Utilizar validación cruzada estratificada (Stratified K-Fold) para optimizar hiperparámetros basándose en el F1-score de validación.",
-              "Configurar 'class_weight=\"balanced\"' si existe desbalance de clases afectando la precisión y exhaustividad."
-            ],
-            "prioridad": "alta"
-          }
-        },
-        {
-          "intento": 2,
-          "estado": "exito",
-          "latencia_s": 6.849,
-          "respuesta": {
-            "problema": "Sobreajuste (overfitting) en el modelo Random Forest, evidenciado por un alto rendimiento en entrenamiento y una degradación significativa del F1-score en el conjunto de prueba.",
-            "recomendaciones": [
-              "Ajustar los hiperparámetros de poda controlando la profundidad máxima (max_depth) e incrementando min_samples_split y min_samples_leaf para limitar la complejidad de los árboles.",
-              "Reducir la cantidad de características evaluadas por división (max_features) para aumentar la diversidad entre los árboles y mejorar la generalización.",
-              "Verificar y tratar el desbalance de clases utilizando ponderación de clases (class_weight='balanced') o técnicas de redefinición de umbral de decisión.",
-              "Utilizar validación cruzada estratificada (Stratified K-Fold) mediante GridSearchCV o RandomizedSearchCV para una optimización técnica y realista del F1-score."
-            ],
-            "prioridad": "Alta"
-          }
-        },
-        {
-          "intento": 3,
-          "estado": "exito",
-          "latencia_s": 7.493,
-          "respuesta": {
-            "problema": "Sobreajuste (overfitting) en el modelo Random Forest, evidenciado por un alto rendimiento en el conjunto de entrenamiento y una degradación significativa del F1-score en datos no vistos.",
-            "recomendaciones": [
-              "Regularizar la complejidad de los árboles reduciendo 'max_depth' e incrementando 'min_samples_leaf' y 'min_samples_split'.",
-              "Manejar un posible desbalance de clases ajustando el parámetro 'class_weight' a 'balanced' o adaptando el umbral de decisión para optimizar directamente el F1-score.",
-              "Reducir 'max_features' por división para descorrelacionar los árboles del ensamblado e incrementar la capacidad de generalización.",
-              "Incrementar el número de estimadores ('n_estimators') y utilizar validación cruzada estratificada para la selección de hiperparámetros."
-            ],
-            "prioridad": "alta"
-          }
-        }
-      ]
+      "intentos": 6,
+      "objetivo_cumplido": true,
+      "exitos_pendientes": 0
     },
     "interpretar_metricas": {
-      "exitos": 1,
-      "fallos": 2,
-      "intentos": 3,
-      "consistencia_pct": 33.33,
-      "resultados": [
-        {
-          "intento": 1,
-          "estado": "exito",
-          "latencia_s": 6.694,
-          "respuesta": {
-            "metrica": "Precisión: 0.92, Recall: 0.58",
-            "interpretacion": "Una precisión de 0.92 indica que el 92% de las transacciones clasificadas como fraude son realmente fraudulentas, generando muy pocas falsas alarmas. Sin embargo, un recall de 0.58 significa que el modelo solo detecta el 58% del total de fraudes reales ocurridos.",
-            "advertencia": "El modelo está dejando pasar un 42% de los casos de fraude reales (falsos negativos). En problemas de detección de fraude, los falsos negativos suelen costar más dinero que los falsos positivos, por lo que una alta precisión con un bajo recall puede generar una falsa sensación de seguridad y pérdidas financieras significativas."
-          }
-        },
-        {
-          "intento": 2,
-          "estado": "fallo",
-          "latencia_s": 5.246,
-          "error": "Gemini respondió con HTTP 503."
-        },
-        {
-          "intento": 3,
-          "estado": "fallo",
-          "latencia_s": 2.745,
-          "error": "Gemini respondió con HTTP 503."
-        }
-      ]
+      "version_prompt": "5ce3f2ff9107bed9",
+      "exitos": 3,
+      "fallos": 6,
+      "intentos": 9,
+      "objetivo_cumplido": true,
+      "exitos_pendientes": 0
     }
   }
 }

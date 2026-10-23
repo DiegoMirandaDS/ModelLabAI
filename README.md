@@ -76,19 +76,43 @@ Desde la raíz del repositorio:
 python -m src.main
 ```
 
-## Banco de prompts
+## Banco de prompts y evaluación de consistencia
 
-Ejecutar el experimento de consistencia:
+ModelLab AI incorpora un banco de tres prompts orientados al análisis de modelos de Machine Learning:
+
+1. **Diagnóstico de sobreajuste:** identifica posibles problemas de generalización.
+2. **Recomendaciones de mejora:** propone estrategias para optimizar modelos.
+3. **Interpretación de métricas:** explica resultados y sus limitaciones.
+
+Cada prompt dispone de instrucciones de sistema independientes, un ejemplo de entrada y un esquema JSON esperado.
+
+### Ejecutar la evaluación
+
+Desde la raíz del repositorio:
 
 ```bash
 python -m src.prompts.test_consistencia
 ```
 
-El script genera:
+El sistema utiliza un historial acumulativo en formato JSON Lines (`.jsonl`), registrando cada solicitud individualmente, tanto si es exitosa como si falla.
 
-`src/prompts/registro_resultados.json`
+La evaluación tiene como objetivo obtener **al menos tres respuestas JSON válidas por prompt**, para cada combinación de modelo y versión del prompt.
 
-Cada prompt se prueba tres veces contra la API real.
+El programa identifica las pruebas ya completadas y evita repetirlas innecesariamente. Si una prueba queda incompleta por errores de la API, puede continuarse en una ejecución posterior.
+
+Cada ejecución realiza como máximo tres intentos adicionales por prompt pendiente.
+
+### Archivos de resultados
+
+- `src/prompts/registro_intentos.jsonl`: historial acumulativo de solicitudes, respuestas y errores.
+- `src/prompts/registro_resultados.json`: resumen regenerado a partir del historial.
+- `src/prompts/migrar_registros.py`: herramienta de migración de registros anteriores.
+
+El historial incluye identificadores de intento, fechas, modelo utilizado, versión del prompt, latencia y estado de cada solicitud.
+
+Los errores HTTP se conservan para distinguir fallos de disponibilidad del servicio de problemas de validación JSON.
+
+**Nota:** la consistencia evaluada corresponde a la estructura de las respuestas. No constituye por sí misma una evaluación cuantitativa de la exactitud técnica de su contenido.
 
 ## Pruebas unitarias
 
