@@ -112,8 +112,6 @@ El historial incluye identificadores de intento, fechas, modelo utilizado, versi
 
 Los errores HTTP se conservan para distinguir fallos de disponibilidad del servicio de problemas de validación JSON.
 
-**Nota:** la consistencia evaluada corresponde a la estructura de las respuestas. No constituye por sí misma una evaluación cuantitativa de la exactitud técnica de su contenido.
-
 ## Pruebas unitarias
 
 ```bash
