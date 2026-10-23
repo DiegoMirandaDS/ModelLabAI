@@ -1,0 +1,67 @@
+
+digraph ModelLabAI {
+    graph [
+        rankdir=TB,
+        bgcolor="white",
+        pad=0.5,
+        nodesep=0.7,
+        ranksep=0.85,
+        splines=ortho
+    ];
+
+    node [
+        shape=box,
+        style="rounded,filled",
+        fillcolor="#FFF9F7",
+        color="#D84D4D",
+        fontname="Arial",
+        fontsize=12,
+        penwidth=1.5,
+        margin="0.22,0.14"
+    ];
+
+    edge [
+        color="#D84D4D",
+        fontname="Arial",
+        fontsize=10,
+        arrowsize=0.7
+    ];
+
+    usuario [label="USUARIO"];
+    armar [label="armar_peticion()\nValida entrada y construye solicitud"];
+    enviar [label="enviar_peticion()\nRealiza solicitud HTTP"];
+    respuesta [label="Respuesta JSON de Gemini"];
+    extraer [label="extraer_texto()\nObtiene texto generado"];
+    costo [label="calcular_costo()\nCalcula costo estimado"];
+    consola [label="Respuesta por consola"];
+    mostrar_costo [label="Costo estimado en USD"];
+
+    credencial [
+        label=".env\nGEMINI_API_KEY",
+        fillcolor="#FFF3D9",
+        color="#D39B38"
+    ];
+
+    errores [
+        label="Manejo de errores\nValueError / RuntimeError\nTimeout / ConnectionError\nHTTPError / JSON inválido",
+        fillcolor="#EAF2FF",
+        color="#5785CF"
+    ];
+
+    usuario -> armar [label="Pregunta"];
+    credencial -> armar [label="Clave vía dotenv"];
+    armar -> enviar [label="URL, headers, body"];
+    enviar -> respuesta [label="JSON + usageMetadata"];
+
+    respuesta -> extraer [label="candidates"];
+    respuesta -> costo [label="usageMetadata"];
+
+    extraer -> consola [label="Texto"];
+    costo -> mostrar_costo [label="USD"];
+
+    enviar -> errores [style=dashed, label="Excepciones"];
+
+    {rank=same; credencial; armar;}
+    {rank=same; extraer; costo;}
+    {rank=same; consola; mostrar_costo;}
+}
