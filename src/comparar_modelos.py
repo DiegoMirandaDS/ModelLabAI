@@ -114,11 +114,6 @@ def crear_informe(filas, ejecucion, fecha):
             partes.append("**Error:** " + r["error"].replace("\n", " "))
         partes.append("")
     partes += [
-        "## Evaluación de calidad y decisión",
-        "",
-        "La exactitud, la claridad y la utilidad de las respuestas deben ser evaluadas "
-        "manualmente con los ejemplos anteriores antes de elegir un modelo.",
-        "",
         "## Fuentes",
         "",
         "- https://ai.google.dev/gemini-api/docs/pricing",

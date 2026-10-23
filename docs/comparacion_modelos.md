@@ -199,9 +199,6 @@ Para evitar que el modelo memorice y logre aprender de verdad, se utilizan las s
 5. **Parada temprana (Early Stopping):** Detener el entrenamiento en el momento exacto en que el modelo empieza a empeorar su rendimiento con los datos de prueba.
 6. **Dropout (en Redes Neuronales):** Desactivar aleatoriamente algunas "neuronas" durante el entrenamiento para forzar a la red a aprender rutas alternativas y no depender de datos específicos.
 
-## Evaluación de calidad y decisión
-
-La exactitud, la claridad y la utilidad de las respuestas deben ser evaluadas manualmente con los ejemplos anteriores antes de elegir un modelo.
 
 ## Fuentes
 
