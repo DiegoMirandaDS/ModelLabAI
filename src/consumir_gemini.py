@@ -6,6 +6,7 @@ import json
 import re
 import random
 import time
+import logging
 
 import requests
 from dotenv import load_dotenv
@@ -15,10 +16,11 @@ load_dotenv()
 # Tarifa didáctica, no precio vigente de Gemini ni cargo comprobado.
 COSTO_POR_1000_TOKENS = 0.002
 costo_total_sesion = 0.0
+logger = logging.getLogger(__name__)
 
 
 
-def armar_peticion(pregunta, system_instruction=None, response_schema=None):
+def armar_peticion(pregunta, system_instruction=None, response_schema=None, max_output_tokens=None):
     """Construye una petición REST a Gemini, con salida estructurada opcional."""
 
     if not isinstance(pregunta, str) or not pregunta.strip():
@@ -63,6 +65,11 @@ def armar_peticion(pregunta, system_instruction=None, response_schema=None):
             "responseSchema": response_schema,
         }
 
+    if max_output_tokens is not None:
+        if type(max_output_tokens) is not int or max_output_tokens < 1:
+            raise ValueError("max_output_tokens debe ser un entero positivo.")
+        body.setdefault("generationConfig", {})["maxOutputTokens"] = max_output_tokens
+
     return url, headers, body
 
 def enviar_peticion(url, headers, body):
@@ -80,6 +87,10 @@ def enviar_peticion(url, headers, body):
             "No se pudo conectar con el servicio Gemini."
         ) from error
 
+    logger.info(
+        "Respuesta HTTP %s", respuesta.status_code,
+        extra={"evento": "http", "datos": {"codigo": respuesta.status_code}},
+    )
     if respuesta.status_code in (401, 403):
         raise ValueError(
             f"Gemini respondió con HTTP {respuesta.status_code}: revisa credenciales y permisos."
@@ -148,7 +159,15 @@ def con_reintento(funcion, intentos=3, espera_base=2, espera_maxima=30):
             if intento == intentos - 1:
                 raise
             espera = min(espera_base * (2 ** intento), espera_maxima)
-            time.sleep(min(espera + random.uniform(0, espera * 0.1), espera_maxima))
+            espera = min(espera + random.uniform(0, espera * 0.1), espera_maxima)
+            logger.info(
+                "Intento %s de %s falló. Reintentando en %.3fs.", intento + 1, intentos, espera,
+                extra={"evento": "reintento", "datos": {
+                    "intento_fallido": intento + 1, "intentos_maximos": intentos,
+                    "espera_segundos": espera,
+                }},
+            )
+            time.sleep(espera)
 
 
 def registrar_costo(respuesta, precio_entrada=None, precio_salida=None):
@@ -164,6 +183,16 @@ def registrar_costo(respuesta, precio_entrada=None, precio_salida=None):
             raise ValueError("Los precios no pueden ser negativos.")
         costo = calcular_costo(respuesta, precio_entrada, precio_salida)
     costo_total_sesion += costo
+    logger.info(
+        "Operación: costo estimado USD %.8f; acumulado USD %.8f.", costo, costo_total_sesion,
+        extra={"evento": "costo", "datos": {
+            "tokens": {k: respuesta["usageMetadata"][k] for k in (
+                "promptTokenCount", "candidatesTokenCount", "thoughtsTokenCount", "totalTokenCount"
+            ) if k in respuesta["usageMetadata"]},
+            "costo_estimado_usd": costo, "acumulado_usd": costo_total_sesion,
+            "modo_tarifa": "didactica" if precio_entrada is None else "desglosada",
+        }},
+    )
     return costo
 
 
@@ -171,13 +200,16 @@ def consultar_modelo(
     pregunta, system_instruction=None, response_schema=None,
     intentos=3, espera_base=2, espera_maxima=30,
     precio_entrada=None, precio_salida=None,
+    max_output_tokens=None,
 ):
     """Consulta con reintentos; registra consumo reportado y devuelve texto."""
     if (precio_entrada is None) != (precio_salida is None):
         raise ValueError("Debes proporcionar ambos precios por token.")
     if precio_entrada is not None and (precio_entrada < 0 or precio_salida < 0):
         raise ValueError("Los precios no pueden ser negativos.")
-    url, headers, body = armar_peticion(pregunta, system_instruction, response_schema)
+    url, headers, body = armar_peticion(
+        pregunta, system_instruction, response_schema, max_output_tokens=max_output_tokens,
+    )
     try:
         datos = con_reintento(
             lambda: enviar_peticion(url, headers, body),

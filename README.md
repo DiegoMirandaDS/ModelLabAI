@@ -98,6 +98,18 @@ python -m src.main
 
 Los costos son estimaciones, no cargos comprobados. La tarifa didáctica no representa precios de Gemini. `src/main.py` conserva los valores históricos del proyecto, etiquetados como tales. El acumulador es local al proceso y cuenta únicamente respuestas con consumo reportado: no estima operaciones fallidas ni consumo ausente. `registrar_costo` directo exige los metadatos necesarios; el coordinador puede entregar texto sin ellos sin inventar un costo. Es una solución para la consola de este bloque; el aislamiento de sesiones concurrentes queda para una futura aplicación multiusuario.
 
+## Ensayo de rate limit — bloque 13
+
+Se realizó un ensayo real con el cliente actualizado: el primer 429 apareció en la petición HTTP 7 y la operación se recuperó tras una espera de 2.002 segundos. Hubo siete operaciones exitosas, ocho peticiones HTTP y 813 tokens reportados. El [informe del ensayo](docs/ensayo-bloque-13.md) incluye la evidencia y el costo referencial.
+
+Para repetirlo con la configuración del entorno (realiza llamadas reales y consume cuota):
+
+```bash
+python -m src.ensayo_rate_limit --ejecutar
+```
+
+Máximo diez operaciones, tres intentos por operación y 128 tokens de salida por petición; se detiene tras la primera operación que recibe un 429. La ejecución sin `--ejecutar` muestra únicamente la ayuda.
+
 ## Banco histórico de prompts
 
 Se conservan los prompts de diagnóstico de sobreajuste, recomendaciones de mejora e interpretación de métricas. Podrán apoyar etapas futuras de evaluación de modelos.

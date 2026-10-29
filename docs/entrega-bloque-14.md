@@ -35,7 +35,7 @@ Todas las pruebas siguientes están en `tests/test_cliente.py`:
 
 Un fixture aísla las credenciales ficticias y el acumulador por prueba. Las pruebas del checklist bloquean cualquier intento de red o espera que no esté expresamente simulado. El jitter se comprueba mediante rangos y un límite, sin comparar un valor aleatorio exacto.
 
-Se mantienen las seis pruebas anteriores (adaptando la entrada de consola al coordinador) y se añaden tres pruebas del ejemplo de ETL en `tests/test_ejemplo_etl.py`. Hay 26 casos del checklist y sus límites, seis de regresión y tres del ejemplo: 35 en total.
+Se mantienen las seis pruebas anteriores (adaptando la entrada de consola al coordinador) y se añaden tres pruebas del ejemplo de ETL en `tests/test_ejemplo_etl.py`. La suite original comprende 26 casos del checklist y sus límites, seis de regresión y tres del ejemplo: 35. Con las tres pruebas del ensayo de rate limit del bloque 13, la suite actual suma 38.
 
 ## Cómo reproducir
 
@@ -50,7 +50,7 @@ python -m pip check
 Resultado observado:
 
 ```text
-35 passed in 0.15s
+38 passed
 No broken requirements found.
 ```
 
@@ -79,3 +79,7 @@ Excel, bases de datos, perfilado real, ejecución de ETL y entrenamiento siguen 
 El modo académico usa 0.002 USD por 1000 tokens como tarifa didáctica, no como precio vigente de Gemini. Se conserva la función de cálculo desglosado del proyecto y puede utilizarse proporcionando ambos precios por token.
 
 El acumulador de consola solo registra respuestas que reportan consumo y se reinicia al iniciar un proceso. No representa facturación ni un sistema multiusuario. Las evidencias históricas de API, modelos y benchmarks permanecen intactas y no se presentan como mediciones nuevas.
+
+## Ensayo previo del bloque 13
+
+El [informe del ensayo real](ensayo-bloque-13.md) documenta el HTTP 429, la espera, la recuperación y los costos reportados del cliente actualizado.

@@ -1,0 +1,229 @@
+{
+  "id": "20261029T213756336865Z",
+  "fecha_santiago": "2026-10-29T18:37:56.336865-03:00",
+  "modelo": "gemini-3.6-flash",
+  "tipo": "API real; sin mocks y sin concurrencia",
+  "limites": {
+    "operaciones": 10,
+    "intentos_por_operacion": 3,
+    "max_output_tokens_por_peticion": 128
+  },
+  "tarifa": {
+    "modo": "didactica",
+    "usd_por_1000_tokens": 0.002,
+    "nota": "Estimación referencial; no tarifa vigente ni cargo comprobado"
+  },
+  "estado": "finalizado",
+  "eventos": [
+    {
+      "fecha_utc": "2026-10-29T21:38:00.352399+00:00",
+      "operacion": 1,
+      "evento": "http",
+      "codigo": 200
+    },
+    {
+      "fecha_utc": "2026-10-29T21:38:00.353298+00:00",
+      "operacion": 1,
+      "evento": "costo",
+      "tokens": {
+        "promptTokenCount": 11,
+        "candidatesTokenCount": 1,
+        "thoughtsTokenCount": 118,
+        "totalTokenCount": 130
+      },
+      "costo_estimado_usd": 0.00026000000000000003,
+      "acumulado_usd": 0.00026000000000000003,
+      "modo_tarifa": "didactica"
+    },
+    {
+      "fecha_utc": "2026-10-29T21:38:02.553262+00:00",
+      "operacion": 2,
+      "evento": "http",
+      "codigo": 200
+    },
+    {
+      "fecha_utc": "2026-10-29T21:38:02.554294+00:00",
+      "operacion": 2,
+      "evento": "costo",
+      "tokens": {
+        "promptTokenCount": 11,
+        "candidatesTokenCount": 1,
+        "thoughtsTokenCount": 104,
+        "totalTokenCount": 116
+      },
+      "costo_estimado_usd": 0.00023200000000000003,
+      "acumulado_usd": 0.000492,
+      "modo_tarifa": "didactica"
+    },
+    {
+      "fecha_utc": "2026-10-29T21:38:04.098949+00:00",
+      "operacion": 3,
+      "evento": "http",
+      "codigo": 200
+    },
+    {
+      "fecha_utc": "2026-10-29T21:38:04.100001+00:00",
+      "operacion": 3,
+      "evento": "costo",
+      "tokens": {
+        "promptTokenCount": 11,
+        "candidatesTokenCount": 1,
+        "thoughtsTokenCount": 82,
+        "totalTokenCount": 94
+      },
+      "costo_estimado_usd": 0.00018800000000000002,
+      "acumulado_usd": 0.00068,
+      "modo_tarifa": "didactica"
+    },
+    {
+      "fecha_utc": "2026-10-29T21:38:06.282875+00:00",
+      "operacion": 4,
+      "evento": "http",
+      "codigo": 200
+    },
+    {
+      "fecha_utc": "2026-10-29T21:38:06.284051+00:00",
+      "operacion": 4,
+      "evento": "costo",
+      "tokens": {
+        "promptTokenCount": 11,
+        "thoughtsTokenCount": 99,
+        "totalTokenCount": 110
+      },
+      "costo_estimado_usd": 0.00022,
+      "acumulado_usd": 0.0009000000000000001,
+      "modo_tarifa": "didactica"
+    },
+    {
+      "fecha_utc": "2026-10-29T21:38:09.248546+00:00",
+      "operacion": 5,
+      "evento": "http",
+      "codigo": 200
+    },
+    {
+      "fecha_utc": "2026-10-29T21:38:09.249477+00:00",
+      "operacion": 5,
+      "evento": "costo",
+      "tokens": {
+        "promptTokenCount": 11,
+        "candidatesTokenCount": 1,
+        "thoughtsTokenCount": 119,
+        "totalTokenCount": 131
+      },
+      "costo_estimado_usd": 0.000262,
+      "acumulado_usd": 0.001162,
+      "modo_tarifa": "didactica"
+    },
+    {
+      "fecha_utc": "2026-10-29T21:38:12.015726+00:00",
+      "operacion": 6,
+      "evento": "http",
+      "codigo": 200
+    },
+    {
+      "fecha_utc": "2026-10-29T21:38:12.016990+00:00",
+      "operacion": 6,
+      "evento": "costo",
+      "tokens": {
+        "promptTokenCount": 11,
+        "candidatesTokenCount": 1,
+        "thoughtsTokenCount": 87,
+        "totalTokenCount": 99
+      },
+      "costo_estimado_usd": 0.00019800000000000002,
+      "acumulado_usd": 0.00136,
+      "modo_tarifa": "didactica"
+    },
+    {
+      "fecha_utc": "2026-10-29T21:38:13.234241+00:00",
+      "operacion": 7,
+      "evento": "http",
+      "codigo": 429
+    },
+    {
+      "fecha_utc": "2026-10-29T21:38:13.234591+00:00",
+      "operacion": 7,
+      "evento": "reintento",
+      "intento_fallido": 1,
+      "intentos_maximos": 3,
+      "espera_segundos": 2.002360792797762
+    },
+    {
+      "fecha_utc": "2026-10-29T21:38:17.723299+00:00",
+      "operacion": 7,
+      "evento": "http",
+      "codigo": 200
+    },
+    {
+      "fecha_utc": "2026-10-29T21:38:17.724480+00:00",
+      "operacion": 7,
+      "evento": "costo",
+      "tokens": {
+        "promptTokenCount": 11,
+        "candidatesTokenCount": 1,
+        "thoughtsTokenCount": 121,
+        "totalTokenCount": 133
+      },
+      "costo_estimado_usd": 0.000266,
+      "acumulado_usd": 0.001626,
+      "modo_tarifa": "didactica"
+    }
+  ],
+  "operaciones": [
+    {
+      "numero": 1,
+      "estado": "exito",
+      "respuesta": "OK",
+      "duracion_segundos": 4.016
+    },
+    {
+      "numero": 2,
+      "estado": "exito",
+      "respuesta": "OK",
+      "duracion_segundos": 2.201
+    },
+    {
+      "numero": 3,
+      "estado": "exito",
+      "respuesta": "OK",
+      "duracion_segundos": 1.545
+    },
+    {
+      "numero": 4,
+      "estado": "exito",
+      "respuesta": "OK",
+      "duracion_segundos": 2.184
+    },
+    {
+      "numero": 5,
+      "estado": "exito",
+      "respuesta": "OK",
+      "duracion_segundos": 2.965
+    },
+    {
+      "numero": 6,
+      "estado": "exito",
+      "respuesta": "OK",
+      "duracion_segundos": 2.768
+    },
+    {
+      "numero": 7,
+      "estado": "exito",
+      "respuesta": "OK",
+      "duracion_segundos": 5.707
+    }
+  ],
+  "motivo_fin": "429 observado; se completó la operación con sus reintentos",
+  "resumen": {
+    "respuestas_http": 8,
+    "primera_respuesta_429": 7,
+    "respuestas_429": 1,
+    "operaciones_exitosas": 7,
+    "costo_estimado_usd": 0.001626,
+    "esperas_programadas_segundos": [
+      2.002360792797762
+    ],
+    "nota_costo": "Solo consumo reportado; no permite inferir cargos por fallos ni consumo ausente"
+  },
+  "fin_utc": "2026-10-29T21:38:17.725336+00:00"
+}
