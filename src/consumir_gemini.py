@@ -4,11 +4,17 @@
 import os
 import json
 import re
+import random
+import time
 
 import requests
 from dotenv import load_dotenv
 
 load_dotenv()
+
+# Tarifa didáctica, no precio vigente de Gemini ni cargo comprobado.
+COSTO_POR_1000_TOKENS = 0.002
+costo_total_sesion = 0.0
 
 
 
@@ -66,13 +72,20 @@ def enviar_peticion(url, headers, body):
             url, headers=headers, json=body, timeout=30
         )
     except requests.exceptions.Timeout as error:
-        raise RuntimeError(
+        raise TimeoutError(
             "La conexión superó el tiempo de espera."
         ) from error
     except requests.exceptions.ConnectionError as error:
         raise RuntimeError(
             "No se pudo conectar con el servicio Gemini."
         ) from error
+
+    if respuesta.status_code in (401, 403):
+        raise ValueError(
+            f"Gemini respondió con HTTP {respuesta.status_code}: revisa credenciales y permisos."
+        )
+    if respuesta.status_code == 429 or 500 <= respuesta.status_code < 600:
+        raise TimeoutError(f"Gemini respondió con HTTP {respuesta.status_code}.")
 
     try:
         respuesta.raise_for_status()
@@ -122,11 +135,66 @@ def calcular_costo(datos, precio_entrada, precio_salida):
     return costo
 
 
-def obtener_dato_de_prueba(pregunta):
-    """Coordina la petición y devuelve el texto generado."""
-    url, headers, body = armar_peticion(pregunta)
-    datos = enviar_peticion(url, headers, body)
+def con_reintento(funcion, intentos=3, espera_base=2, espera_maxima=30):
+    """Reintenta solo TimeoutError; intentos incluye la primera llamada."""
+    if type(intentos) is not int or intentos < 1:
+        raise ValueError("intentos debe ser un entero positivo.")
+    if espera_base < 0 or espera_maxima < 0:
+        raise ValueError("Las esperas no pueden ser negativas.")
+    for intento in range(intentos):
+        try:
+            return funcion()
+        except TimeoutError:
+            if intento == intentos - 1:
+                raise
+            espera = min(espera_base * (2 ** intento), espera_maxima)
+            time.sleep(min(espera + random.uniform(0, espera * 0.1), espera_maxima))
+
+
+def registrar_costo(respuesta, precio_entrada=None, precio_salida=None):
+    """Acumula USD estimados; sin precios usa la tarifa didáctica por total."""
+    global costo_total_sesion
+    if (precio_entrada is None) != (precio_salida is None):
+        raise ValueError("Debes proporcionar ambos precios por token.")
+    if precio_entrada is None:
+        # No inventar un costo cero cuando el proveedor no reportó consumo.
+        costo = respuesta["usageMetadata"]["totalTokenCount"] / 1000 * COSTO_POR_1000_TOKENS
+    else:
+        if precio_entrada < 0 or precio_salida < 0:
+            raise ValueError("Los precios no pueden ser negativos.")
+        costo = calcular_costo(respuesta, precio_entrada, precio_salida)
+    costo_total_sesion += costo
+    return costo
+
+
+def consultar_modelo(
+    pregunta, system_instruction=None, response_schema=None,
+    intentos=3, espera_base=2, espera_maxima=30,
+    precio_entrada=None, precio_salida=None,
+):
+    """Consulta con reintentos; registra consumo reportado y devuelve texto."""
+    if (precio_entrada is None) != (precio_salida is None):
+        raise ValueError("Debes proporcionar ambos precios por token.")
+    if precio_entrada is not None and (precio_entrada < 0 or precio_salida < 0):
+        raise ValueError("Los precios no pueden ser negativos.")
+    url, headers, body = armar_peticion(pregunta, system_instruction, response_schema)
+    try:
+        datos = con_reintento(
+            lambda: enviar_peticion(url, headers, body),
+            intentos=intentos, espera_base=espera_base, espera_maxima=espera_maxima,
+        )
+    except TimeoutError as error:
+        raise RuntimeError("No se pudo completar la consulta tras agotar los intentos.") from error
+    uso = datos.get("usageMetadata", {})
+    campo = "totalTokenCount" if precio_entrada is None else "promptTokenCount"
+    if campo in uso:
+        registrar_costo(datos, precio_entrada, precio_salida)
     return extraer_texto(datos)
+
+
+def obtener_dato_de_prueba(pregunta):
+    """Entrada histórica compatible; usa el coordinador del cliente."""
+    return consultar_modelo(pregunta)
 
 
 def parsear_respuesta_json(texto, esquema):

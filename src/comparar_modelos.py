@@ -169,7 +169,7 @@ def ejecutar():
                         "respuesta": respuesta,
                     })
                     print(f"  Intento {intento}: {latencia:.2f} s | ${costo:.8f}")
-                except (ValueError, RuntimeError, KeyError, IndexError, TypeError) as error:
+                except (ValueError, TimeoutError, RuntimeError, KeyError, IndexError, TypeError) as error:
                     transcurrido = (time.perf_counter() - inicio) if inicio is not None else 0.0
                     registro.update({
                         "estado": "error", "latencia_s": round(transcurrido, 4),

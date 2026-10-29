@@ -1,66 +1,23 @@
-
-"""Pruebas del punto de entrada de ModelLab AI."""
+"""Pruebas de la entrada de consola sin consultar la API."""
 
 import unittest
 from unittest.mock import patch
 
-from src.main import main
+from src.main import main, SYSTEM_INSTRUCTION, PRECIO_ENTRADA, PRECIO_SALIDA
 
 
 class TestMain(unittest.TestCase):
-
-    @patch("src.main.calcular_costo")
-    @patch("src.main.extraer_texto")
-    @patch("src.main.enviar_peticion")
-    @patch("src.main.armar_peticion")
-    def test_main_exitoso(
-        self,
-        mock_armar,
-        mock_enviar,
-        mock_extraer,
-        mock_costo,
-    ):
-        """Comprueba que main coordina correctamente las funciones."""
-
-        mock_armar.return_value = (
-            "https://api.ejemplo.com",
-            {"x-goog-api-key": "clave-ficticia"},
-            {"contents": []},
-        )
-
-        mock_enviar.return_value = {
-            "candidates": [
-                {
-                    "content": {
-                        "parts": [
-                            {"text": "El overfitting es el sobreajuste."}
-                        ]
-                    }
-                }
-            ],
-            "usageMetadata": {
-                "promptTokenCount": 10,
-                "candidatesTokenCount": 20,
-            },
-        }
-
-        mock_extraer.return_value = (
-            "El overfitting es el sobreajuste."
-        )
-
-        mock_costo.return_value = 0.0001
-
-        with patch("builtins.print") as mock_print:
+    @patch("src.main.cliente.consultar_modelo", return_value="Explicación simulada")
+    def test_main_exitoso(self, consultar):
+        with patch("builtins.print") as imprimir:
             main()
-
-        mock_armar.assert_called_once()
-        mock_enviar.assert_called_once()
-        mock_extraer.assert_called_once()
-        mock_costo.assert_called_once()
-
-        mock_print.assert_any_call(
-            "El overfitting es el sobreajuste."
+        consultar.assert_called_once_with(
+            "Explica brevemente qué es el overfitting y menciona dos formas de prevenirlo.",
+            system_instruction=SYSTEM_INSTRUCTION,
+            precio_entrada=PRECIO_ENTRADA,
+            precio_salida=PRECIO_SALIDA,
         )
+        imprimir.assert_any_call("Explicación simulada")
 
 
 if __name__ == "__main__":

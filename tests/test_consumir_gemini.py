@@ -32,6 +32,7 @@ class TestConsumirGemini(unittest.TestCase):
 
     @patch("src.consumir_gemini.requests.post")
     def test_json_invalido(self, mock_post):
+        mock_post.return_value.status_code = 200
         mock_post.return_value.json.side_effect = ValueError(
             "JSON inválido"
         )

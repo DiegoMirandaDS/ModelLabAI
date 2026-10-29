@@ -210,7 +210,7 @@ def evaluar_prompt(prompt, modelo, historial):
             exitos += 1
             print(f"  Intento {numero}: JSON válido")
 
-        except (ValueError, RuntimeError, KeyError, TypeError) as error:
+        except (ValueError, TimeoutError, RuntimeError, KeyError, TypeError) as error:
             registro["estado"] = "fallo"
             registro["error"] = str(error)
             print(f"  Intento {numero}: {error}")
