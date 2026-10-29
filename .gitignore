@@ -16,3 +16,6 @@ __pycache__/
 # Configuración local
 .vscode/
 .idea/
+
+# Notas de trabajo y planes locales
+/.local-docs/

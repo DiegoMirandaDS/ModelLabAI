@@ -1,6 +1,6 @@
 # Entrega de la actividad core — Bloque 14
 
-Fecha de preparación: 29 de octubre de 2026.
+Fecha de validación: 29 de octubre de 2026.
 Curso: Especialización en Desarrollo con IA Generativa, Skillnest.
 Proyecto: ModelLab AI.
 Etapa: **primera entrega de Gate 2**. Gate 2 continúa después de este bloque.
@@ -8,7 +8,7 @@ Etapa: **primera entrega de Gate 2**. Gate 2 continúa después de este bloque.
 ## Actividad y alcance
 
 Actividad: «Escribe tus pruebas unitarias y verifica que pasen».
-Fuente: [actividad core del bloque 14](https://learning-pro.skillnest.com/mod/page/view.php?id=15643) y respaldo local `E:/Proyectos/SKILLNESTIA/Respaldo-bloques-13-14/index.html`, secciones r3–r5.
+Fuente: [actividad core del bloque 14](https://learning-pro.skillnest.com/mod/page/view.php?id=15643).
 
 Se completó el cliente modular y se probó con pytest y mocks de red y tiempo. Se conserva la estructura `src/` y `tests/`: el equivalente al `cliente.py` de los ejemplos del curso es `src/consumir_gemini.py`, y el checklist está en `tests/test_cliente.py`.
 
@@ -56,7 +56,7 @@ No broken requirements found.
 
 Evidencia de la ejecución real de la suite: [salida completa de pytest](evidencias/bloque-14-pytest.txt).
 
-`pytest.ini` limita el descubrimiento a `tests/`, excluyendo la evaluación histórica de consistencia que utiliza la API. No se ejecutó esa evaluación ni una consulta real a Gemini para preparar esta entrega. No se gastaron tokens para estas verificaciones.
+`pytest.ini` limita el descubrimiento a `tests/`, excluyendo la evaluación histórica de consistencia que utiliza la API. Las pruebas unitarias utilizan respuestas simuladas y no consumen tokens de la API.
 
 ## Relación con la intención del producto
 
@@ -72,20 +72,10 @@ python -m src.ejemplos.recomendar_etl
 
 [Salida de vista previa](evidencias/bloque-14-vista-previa.json).
 
-Excel, bases de datos, perfilado real, ejecución de ETL y entrenamiento siguen pendientes. Su incorporación se decidirá progresivamente al revisar los subbloques de las próximas entregas de Gate 2.
+Excel, bases de datos, perfilado real, ejecución de ETL y entrenamiento siguen pendientes. Estas capacidades forman parte del alcance futuro del producto.
 
 ## Costos y alcance de las evidencias
 
 El modo académico usa 0.002 USD por 1000 tokens como tarifa didáctica, no como precio vigente de Gemini. Se conserva la función de cálculo desglosado del proyecto y puede utilizarse proporcionando ambos precios por token.
 
 El acumulador de consola solo registra respuestas que reportan consumo y se reinicia al iniciar un proceso. No representa facturación ni un sistema multiusuario. Las evidencias históricas de API, modelos y benchmarks permanecen intactas y no se presentan como mediciones nuevas.
-
-## Texto preparado para el formulario
-
-> Entrego la actividad core del bloque 14, primera entrega de Gate 2, en el proyecto ModelLab AI. Se completó el cliente modular con clasificación de errores, reintentos con backoff y jitter, registro acumulado de costos estimados y coordinación de consultas a Gemini. La suite cubre los escenarios del checklist usando pytest y mocks de red y tiempo: 35 pruebas aprobadas. El README documenta la orientación del producto hacia recomendación de ETL y modelado para datos tabulares, con clasificación binaria como primer alcance. Se incluye un ejemplo sobre un perfil sintético y evidencia reproducible en docs/entrega-bloque-14.md. Las próximas entregas de Gate 2 se abordarán al revisar el material correspondiente.
-
-Repositorio: [ModelLabAI](https://github.com/DiegoMirandaDS/ModelLabAI).
-
-## Estado del envío a Skillnest
-
-El código y la evidencia están preparados. Al intentar abrir la actividad en el navegador, Skillnest indicó que la sesión había vencido y solicitó iniciar sesión. No se accedió al formulario ni se registró el envío. Se debe retomar ese paso con una sesión activa y verificar la confirmación de recepción antes de considerar la actividad entregada en la plataforma.

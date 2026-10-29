@@ -111,8 +111,7 @@ Este comando **realiza llamadas reales**. Busca al menos tres respuestas estruct
 ## Documentación
 
 - [Intención del producto y separación de responsabilidades](docs/intencion-proyecto.md).
-- [Plan y alcance del bloque 14](docs/plan-bloque-14.md).
-- [Evidencia y texto de entrega del bloque 14](docs/entrega-bloque-14.md).
+- [Validación técnica del bloque 14](docs/entrega-bloque-14.md).
 - [Decisión histórica de arquitectura](docs/decision-arquitectura.md).
 - [Comparación histórica de modelos](docs/comparacion_modelos.md).
 - Diagramas históricos: `docs/diagrama_arquitectura.png`, `docs/diagrama_arquitectura.svg` y `docs/arquitectura.dot`. Representan el estado previo; la dirección actual se describe en los documentos anteriores.
