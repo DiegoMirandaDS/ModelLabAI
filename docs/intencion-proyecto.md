@@ -21,6 +21,6 @@ El perfil enviado deberá excluir por defecto filas originales y valores sensibl
 
 ## Qué aporta el bloque 14
 
-Esta es la **primera entrega de Gate 2**. Completa el cliente modular y sus pruebas unitarias, y añade una demostración del contrato de recomendación sobre un perfil sintético. No completa Gate 2.
+El bloque 14 valida el cliente modular y sus pruebas unitarias e incorpora una demostración del contrato de recomendación sobre un perfil sintético.
 
-El ejemplo provisional de abandono de clientes permite mostrar una dirección de producto sin comprometer el caso final. El alcance implementado no incluye carga de Excel, bases de datos, perfilado real, ETL ejecutable ni entrenamiento.
+El ejemplo de abandono de clientes ilustra la aplicación del contrato de recomendación a clasificación binaria. El alcance implementado no incluye carga de Excel, bases de datos, perfilado real, ETL ejecutable ni entrenamiento.

@@ -3,7 +3,7 @@
 Fecha de validación: 29 de octubre de 2026.
 Curso: Especialización en Desarrollo con IA Generativa, Skillnest.
 Proyecto: ModelLab AI.
-Etapa: **primera entrega de Gate 2**. Gate 2 continúa después de este bloque.
+Etapa: **primera entrega de Gate 2**.
 
 ## Actividad y alcance
 
@@ -72,7 +72,7 @@ python -m src.ejemplos.recomendar_etl
 
 [Salida de vista previa](evidencias/bloque-14-vista-previa.json).
 
-Excel, bases de datos, perfilado real, ejecución de ETL y entrenamiento siguen pendientes. Estas capacidades forman parte del alcance futuro del producto.
+El alcance validado comprende el cliente modular y el contrato de recomendación sobre un perfil sintético. La ingesta de Excel, las conexiones a bases de datos, el perfilado real, la ejecución de ETL y el entrenamiento pertenecen al alcance futuro del producto.
 
 ## Costos y alcance de las evidencias
 

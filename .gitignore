@@ -19,3 +19,6 @@ __pycache__/
 
 # Notas de trabajo y planes locales
 /.local-docs/
+
+# Instrucciones locales del repositorio
+/AGENTS.md

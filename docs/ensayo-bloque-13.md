@@ -65,4 +65,4 @@ python -m pytest -v
 python -m pip check
 ```
 
-Resultado: 38 pruebas aprobadas y dependencias sin conflictos. El envío del formulario del bloque 14 en Skillnest se realiza por separado.
+Resultado: 38 pruebas aprobadas y dependencias sin conflictos.

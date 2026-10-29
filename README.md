@@ -6,7 +6,7 @@ El primer alcance previsto es **clasificación binaria sobre una tabla**. Python
 
 ## Estado actual — primera entrega de Gate 2, bloque 14
 
-Esta entrega corresponde a la actividad core «Escribe tus pruebas unitarias y verifica que pasen». Gate 2 continúa con más bloques y entregas. Sus requisitos se revisarán a partir del material de cada bloque, comenzando por el 15 cuando corresponda.
+Esta versión corresponde a la actividad core del bloque 14: «Escribe tus pruebas unitarias y verifica que pasen».
 
 Implementado:
 
@@ -18,7 +18,7 @@ Implementado:
 - Ejemplo de recomendación de ETL y clasificación binaria sobre un perfil sintético.
 - Banco histórico de prompts, evaluación de consistencia y benchmark experimental.
 
-Pendiente para incrementos posteriores: lectura de Excel/CSV, conexión a bases de datos, perfilado de datos reales, ejecución de ETL, entrenamiento de clasificadores e interfaz integrada. El ejemplo actual no implementa esas capacidades.
+El alcance actual comprende el cliente de Gemini y un ejemplo sobre un perfil sintético. La lectura de Excel/CSV, los conectores de bases de datos, el perfilado real, la ejecución de ETL, el entrenamiento y la interfaz integrada forman parte de la visión del producto.
 
 ## Instalación
 
@@ -58,7 +58,7 @@ Vista previa local, sin API ni credenciales:
 python -m src.ejemplos.recomendar_etl
 ```
 
-Muestra un perfil sintético de abandono de clientes, instrucciones y esquema de respuesta. La clase positiva del ejemplo está definida explícitamente. El ejemplo es provisional: no fija el dominio final del producto.
+Muestra un perfil sintético de abandono de clientes, instrucciones y esquema de respuesta. La clase positiva del ejemplo está definida explícitamente. El caso ilustra el contrato de recomendación para clasificación binaria.
 
 Para consultar realmente a Gemini, configurar primero el entorno y ejecutar:
 
@@ -118,7 +118,7 @@ Se conservan los prompts de diagnóstico de sobreajuste, recomendaciones de mejo
 python -m src.prompts.test_consistencia
 ```
 
-Este comando **realiza llamadas reales**. Busca al menos tres respuestas estructuralmente válidas por prompt, modelo y versión, con un máximo de tres intentos adicionales por prompt pendiente en cada ejecución. Conserva solicitudes exitosas y fallidas en `src/prompts/registro_intentos.jsonl` y regenera `src/prompts/registro_resultados.json`. Su historial anterior no se reescribe para esta entrega.
+Este comando **realiza llamadas reales**. Busca al menos tres respuestas estructuralmente válidas por prompt, modelo y versión, con un máximo de tres intentos adicionales por prompt pendiente en cada ejecución. Conserva solicitudes exitosas y fallidas en `src/prompts/registro_intentos.jsonl` y regenera `src/prompts/registro_resultados.json`.
 
 ## Documentación
 
