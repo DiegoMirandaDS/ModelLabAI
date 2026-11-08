@@ -5,7 +5,8 @@ from langchain_core.runnables import RunnableLambda
 import pytest
 
 from src.orquestacion import (
-    construir_cadena, construir_enrutamiento, procesar_seguro, validar_salida,
+    construir_cadena, construir_enrutamiento, construir_paso_clasificacion,
+    procesar_seguro, validar_salida,
 )
 
 
@@ -67,3 +68,41 @@ def test_paso_truncado_no_alimenta_siguiente():
 def test_validador_admite_fin_normal():
     mensaje = AIMessage(content="completo", response_metadata={"finish_reason": "STOP"})
     assert validar_salida(mensaje) is mensaje
+
+
+@pytest.mark.parametrize("salida,esperada", [
+    (" PREPARACION\n", "preparacion"), ("Modelado", "modelado"),
+    (" CONSULTA ", "consulta"), ("No puedo determinarlo", "consulta"),
+    ("   ", "consulta"),
+])
+def test_clasificador_completo_normaliza_y_limita_categorias(salida, esperada):
+    modelo = Mock(return_value=AIMessage(content=salida))
+    resultado = construir_paso_clasificacion(modelo).invoke({"mensaje": "Necesito ayuda"})
+    assert resultado == esperada
+    modelo.assert_called_once()
+    assert "Necesito ayuda" in modelo.call_args.args[0].to_string()
+
+
+@pytest.mark.parametrize("mensaje", ["", "   ", "\n"])
+def test_entrada_vacia_usa_aclaracion_sin_clasificar(mensaje):
+    clasificador = Mock(side_effect=AssertionError("No debe clasificar una entrada vacía"))
+    rutas = {k: Mock(return_value={"respuesta": "Indica si necesitas preparación o modelado."})
+             for k in ["preparacion", "modelado", "consulta"]}
+    cadena = construir_enrutamiento(paso_clasificacion=RunnableLambda(clasificador),
+                                    rutas={k: RunnableLambda(v) for k, v in rutas.items()})
+    resultado = procesar_seguro(cadena, {"mensaje": mensaje, "perfil": {}})
+    assert resultado["categoria"] == "consulta"
+    assert "preparación o modelado" in resultado["resultado"]["respuesta"]
+    clasificador.assert_not_called()
+    assert rutas["consulta"].call_count == 1
+    assert rutas["preparacion"].call_count == rutas["modelado"].call_count == 0
+
+
+def test_entrada_ambigua_se_aclara_con_clasificacion_completa():
+    modelo = Mock(return_value=AIMessage(content="intención incierta"))
+    rutas = {k: RunnableLambda(lambda _: {"respuesta": "Aclara tu solicitud."})
+             for k in ["preparacion", "modelado", "consulta"]}
+    cadena = construir_enrutamiento(paso_clasificacion=construir_paso_clasificacion(modelo), rutas=rutas)
+    resultado = cadena.invoke({"mensaje": "Ayuda con esto", "perfil": {}})
+    assert resultado["categoria"] == "consulta"
+    assert resultado["resultado"]["respuesta"] == "Aclara tu solicitud."

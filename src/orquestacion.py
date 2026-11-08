@@ -68,7 +68,20 @@ def construir_cadena(modelo):
 
 
 def normalizar_categoria(texto):
-    return texto.strip().lower()
+    categoria = texto.strip().lower()
+    return categoria if categoria in {"preparacion", "modelado", "consulta"} else "consulta"
+
+
+def construir_paso_clasificacion(modelo):
+    """Clasifica con el mismo prompt, parser y normalización usados en el flujo real."""
+    return (
+        PromptTemplate.from_template(
+            "Clasifica la intención de esta solicitud para ModelLab AI. Responde solo "
+            "preparacion, modelado o consulta. Usa preparacion para calidad o ETL; modelado "
+            "para entrenamiento, partición o métricas; consulta para lo demás.\n{mensaje}"
+        ) | modelo | RunnableLambda(validar_salida) | StrOutputParser()
+        | RunnableLambda(normalizar_categoria)
+    )
 
 
 def respuesta_respaldo(entrada):
@@ -87,14 +100,11 @@ def proteger_ruta(ruta):
 def construir_enrutamiento(modelo=None, paso_clasificacion=None, rutas=None):
     """Permite inyectar clasificación y destinos para verificar el flujo sin API."""
     if paso_clasificacion is None:
-        paso_clasificacion = (
-            PromptTemplate.from_template(
-                "Clasifica la intención de esta solicitud para ModelLab AI. Responde solo "
-                "preparacion, modelado o consulta. Usa preparacion para calidad o ETL; modelado "
-                "para entrenamiento, partición o métricas; consulta para lo demás.\n{mensaje}"
-            ) | modelo | RunnableLambda(validar_salida) | StrOutputParser()
-        )
-    clasificacion = paso_clasificacion | RunnableLambda(normalizar_categoria)
+        paso_clasificacion = construir_paso_clasificacion(modelo)
+    clasificacion = RunnableBranch(
+        (lambda x: not x["mensaje"].strip(), RunnableLambda(lambda _: "consulta")),
+        paso_clasificacion | RunnableLambda(normalizar_categoria),
+    )
     if rutas is None:
         base = construir_cadena(modelo)
         rutas = {

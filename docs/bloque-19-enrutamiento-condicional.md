@@ -4,6 +4,8 @@ El [flujo condicional](https://learning-pro.skillnest.com/mod/page/view.php?id=1
 
 La clasificación se normaliza con `strip().lower()`. `RunnablePassthrough.assign` conserva la entrada y agrega la categoría; `RunnableBranch` selecciona el destino:
 
+Una salida de clasificación no reconocida se convierte en `consulta`. Si el mensaje está vacío o solo contiene espacios, se omite el clasificador y se usa la ruta de aclaración.
+
 | Categoría | Destino |
 |---|---|
 | `preparacion` | Chain de tres pasos enfocada en calidad y ETL |

@@ -1,5 +1,7 @@
 # Documentación de ModelLab AI
 
+El código se ubica en `src/`, las pruebas en `tests/`, los documentos técnicos en `docs/` y los registros de ejecución en `docs/evidencias/`. Las pruebas se ejecutan desde la raíz con `python -m pytest`; las ubicaciones exactas de las cores figuran en sus documentos.
+
 ## Producto y datos de prueba
 
 - [Alcance y responsabilidades](intencion-proyecto.md): funciones implementadas y separación entre Python, Gemini y LangChain.
@@ -23,3 +25,5 @@
 [Índice de evidencias](evidencias/README.md): identifica el bloque, el dataset y el contenido de cada registro.
 
 La integración inicial y las decisiones de octubre de 2026 se conservan como antecedentes: [petición HTTP exitosa](evidencia_api.md), [selección de Gemini](decision-arquitectura.md) y [benchmark de modelos](comparacion_modelos.md). Los diagramas históricos acompañan a la decisión de arquitectura.
+
+Referencia de estructura y ejemplos: [repositorio de ayudantías](https://github.com/SebaPobando/Proyecto-IA-Ayudantias). Los requisitos de cada actividad se enlazan en su documento.

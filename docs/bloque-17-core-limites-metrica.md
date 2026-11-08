@@ -1,5 +1,15 @@
 # Límites de la métrica de evaluación — core 17
 
+La [actividad core](https://learning-pro.skillnest.com/mod/page/view.php?id=15652) se acredita con estos tres entregables. Los nombres de archivo de la consigna son ejemplos; las rutas del proyecto son:
+
+| Entregable | Ubicación |
+|---|---|
+| 20 respuestas reales con sus métricas | [docs/evidencias/resultados_metricas.json](evidencias/resultados_metricas.json) |
+| 10 revisiones con rúbrica y justificación | [docs/evidencias/revision_manual.json](evidencias/revision_manual.json) |
+| Documento con las cuatro secciones requeridas | [docs/bloque-17-core-limites-metrica.md](bloque-17-core-limites-metrica.md) |
+
+La generación está en [src/evaluacion.py](../src/evaluacion.py) y las métricas en [src/pipeline_texto.py](../src/pipeline_texto.py). Cada revisión se relaciona con su consulta, referencia y respuesta mediante el campo `id`.
+
 ## Qué mide
 
 Coincidencia de palabras entre referencia y respuesta, después de normalizar mayúsculas, puntuación y espacios. Se cuentan repeticiones con `Counter`: precisión = coincidencias / tokens de respuesta; cobertura = coincidencias / tokens de referencia; F1 = media armónica. Si uno de los textos queda vacío, las tres métricas valen cero.

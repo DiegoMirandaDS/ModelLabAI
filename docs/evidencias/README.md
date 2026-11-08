@@ -14,5 +14,6 @@ Los archivos conservan sus nombres originales para mantener las referencias de l
 | [revision_manual.json](revision_manual.json) | 17 · Core | Diez casos revisados con rúbrica y justificación |
 | [orquestacion_agente.json](orquestacion_agente.json) | 18–21 · Iranian Churn | Chain, tres rutas y tres consultas del agente |
 | [bloques-15-21-pytest.txt](bloques-15-21-pytest.txt) | Verificación al completar el 21 | Suite completa de 77 pruebas |
+| [bloque-20-core-verificacion-pytest.txt](bloque-20-core-verificacion-pytest.txt) | 20 · Core, revisión del checklist | Suite de 86 pruebas, incluidas entradas vacías y ambiguas |
 
 La [captura HTTP 200](../gemini_api_200.png) y los [diagramas de arquitectura](../decision-arquitectura.md) forman parte de la integración inicial de octubre de 2026. La fuente, la licencia y la huella del CSV están en [data](../../data/README.md).
