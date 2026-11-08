@@ -1,26 +1,18 @@
-# Intención del proyecto y decisión de arquitectura
+# ModelLab AI: alcance y responsabilidades
 
-Fecha: 29 de octubre de 2026.
+ModelLab AI ayuda a interpretar un perfil tabular y proponer preparación de datos y validación para clasificación binaria. La demostración usa el CSV público Iranian Churn, cuyo objetivo y clase positiva están documentados.
 
-## Objetivo del producto
+## Responsabilidades
 
-ModelLab AI asistirá a una persona que tiene datos tabulares y quiere prepararlos para construir un modelo predictivo. A futuro podrá recibir Excel o consultar una base de datos, reconocer columnas, medir problemas de calidad y recomendar un proceso de ETL y una estrategia de modelado mediante Gemini.
+- **Python:** carga el CSV, calcula el perfil, detecta anomalías y obtiene el balance del objetivo. Conserva el archivo original.
+- **Gemini:** interpreta el perfil, justifica recomendaciones y distingue evidencia de supuestos.
+- **LangChain:** conecta diagnóstico, preparación y estrategia; enruta solicitudes y recupera fallos por paso.
+- **Agente:** selecciona entre consultar el perfil y calcular el balance; registra las herramientas utilizadas.
 
-El primer alcance previsto es una tabla y clasificación binaria. El usuario debe confirmar el objetivo de negocio, la columna objetivo, la clase positiva y el contexto de uso. El significado de una columna no puede deducirse con certeza solo de su nombre o de sus valores.
+Solo se envían estadísticas agregadas del dataset de demostración. Las herramientas aceptan un identificador registrado y no rutas arbitrarias. Las salidas generativas son recomendaciones: no ejecutan transformaciones ni acreditan modelos entrenados.
 
-## Decisión: cálculo local y recomendación generativa
+## Evaluación
 
-1. El código de ingesta y perfilado calculará tipos observados, nulos, duplicados, cardinalidad y distribución del objetivo.
-2. Gemini recibirá un perfil revisado y devolverá recomendaciones estructuradas, evidencia usada y preguntas pendientes.
-3. El usuario revisará el plan. Su ejecución futura usará transformaciones permitidas y verificables, no código arbitrario generado por el modelo.
-4. El entrenamiento y las métricas serán calculados por librerías de Machine Learning. Gemini ayudará a interpretar resultados medidos.
+Los bloques 15–17 miden coincidencia léxica de respuestas reales y la contrastan con una revisión cualitativa. Los bloques 18–20 verifican dependencias entre pasos, rutas y recuperación ante fallos. El bloque 21 verifica la selección de dos herramientas y una consulta general sin herramientas.
 
-Antes de ajustar imputación, codificación o escalado se definirá la partición adecuada. Si hay tiempo o grupos, se considerarán explícitamente para evitar fuga de información.
-
-El perfil enviado deberá excluir por defecto filas originales y valores sensibles; también se revisarán nombres de columnas y estadísticas que puedan revelar información. En esta entrega se usa únicamente un perfil sintético escrito a mano.
-
-## Qué aporta el bloque 14
-
-El bloque 14 valida el cliente modular y sus pruebas unitarias e incorpora una demostración del contrato de recomendación sobre un perfil sintético.
-
-El ejemplo de abandono de clientes ilustra la aplicación del contrato de recomendación a clasificación binaria. El alcance implementado no incluye carga de Excel, bases de datos, perfilado real, ETL ejecutable ni entrenamiento.
+La evaluación predictiva es distinta: un F1 de texto no mide capacidad para predecir abandono. El [dataset](dataset.md) y los [límites de la métrica](limites_metrica.md) explican esta separación.

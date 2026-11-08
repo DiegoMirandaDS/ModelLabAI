@@ -1,0 +1,542 @@
+[
+  {
+    "id": "filas",
+    "consulta": "¿Cuántos registros contiene la tabla?",
+    "referencia": "La tabla contiene 3150 registros.",
+    "respuesta": "Soy ModelLab AI. El dataset observado contiene 3150 filas.",
+    "precision": 0.2222222222222222,
+    "cobertura": 0.4,
+    "f1": 0.2857142857142857,
+    "coincidencia_cruda": 0.4,
+    "coincidencia_procesada": 0.4,
+    "modelo": "gemini-3.5-flash-lite",
+    "fecha_utc": "2026-11-08T19:11:44.391303+00:00",
+    "version_evaluacion": "9c3cdee22199eccff67e59ae5e40d53e018c16e69c7543ef562e546ea33bbf94",
+    "sha256_csv": "90d5fb6bd1630cd4de4b4d28fcf8b4cb92a8f6ab7484605b0799d47386f7dbe1",
+    "consumo": [
+      {
+        "tokens": {
+          "promptTokenCount": 1626,
+          "candidatesTokenCount": 16,
+          "totalTokenCount": 1642
+        },
+        "costo_estimado_usd": 0.003284,
+        "acumulado_usd": 0.003284,
+        "modo_tarifa": "didactica"
+      }
+    ]
+  },
+  {
+    "id": "columnas",
+    "consulta": "¿Cuántas columnas hay, incluyendo el objetivo?",
+    "referencia": "Hay 14 columnas incluyendo Churn.",
+    "respuesta": "Como ModelLab AI, observo que el dataset cuenta con un total de 14 columnas, incluyendo la columna objetivo.",
+    "precision": 0.16666666666666666,
+    "cobertura": 0.6,
+    "f1": 0.2608695652173913,
+    "coincidencia_cruda": 0.4,
+    "coincidencia_procesada": 0.6,
+    "modelo": "gemini-3.5-flash-lite",
+    "fecha_utc": "2026-11-08T19:12:01.020522+00:00",
+    "version_evaluacion": "9c3cdee22199eccff67e59ae5e40d53e018c16e69c7543ef562e546ea33bbf94",
+    "sha256_csv": "90d5fb6bd1630cd4de4b4d28fcf8b4cb92a8f6ab7484605b0799d47386f7dbe1",
+    "consumo": [
+      {
+        "tokens": {
+          "promptTokenCount": 1628,
+          "candidatesTokenCount": 25,
+          "totalTokenCount": 1653
+        },
+        "costo_estimado_usd": 0.003306,
+        "acumulado_usd": 0.00659,
+        "modo_tarifa": "didactica"
+      }
+    ]
+  },
+  {
+    "id": "objetivo",
+    "consulta": "¿Cuál es la variable objetivo y qué representa su clase positiva?",
+    "referencia": "El objetivo es Churn y la clase positiva 1 significa abandono.",
+    "respuesta": "Como ModelLab AI, informo que la variable objetivo observada es \"Churn\", donde su clase positiva (1) representa que el cliente abandona.",
+    "precision": 0.38095238095238093,
+    "cobertura": 0.7272727272727273,
+    "f1": 0.5,
+    "coincidencia_cruda": 0.45454545454545453,
+    "coincidencia_procesada": 0.7272727272727273,
+    "modelo": "gemini-3.5-flash-lite",
+    "fecha_utc": "2026-11-08T19:12:16.973125+00:00",
+    "version_evaluacion": "9c3cdee22199eccff67e59ae5e40d53e018c16e69c7543ef562e546ea33bbf94",
+    "sha256_csv": "90d5fb6bd1630cd4de4b4d28fcf8b4cb92a8f6ab7484605b0799d47386f7dbe1",
+    "consumo": [
+      {
+        "tokens": {
+          "promptTokenCount": 1631,
+          "candidatesTokenCount": 31,
+          "totalTokenCount": 1662
+        },
+        "costo_estimado_usd": 0.0033239999999999997,
+        "acumulado_usd": 0.009914,
+        "modo_tarifa": "didactica"
+      }
+    ]
+  },
+  {
+    "id": "nulos",
+    "consulta": "¿Cuántos valores nulos se observaron?",
+    "referencia": "Se observaron 0 valores nulos en la tabla.",
+    "respuesta": "Soy ModelLab AI. Se observaron 0 valores nulos en el dataset `iranian_churn`.",
+    "precision": 0.5,
+    "cobertura": 0.75,
+    "f1": 0.6,
+    "coincidencia_cruda": 0.75,
+    "coincidencia_procesada": 0.75,
+    "modelo": "gemini-3.5-flash-lite",
+    "fecha_utc": "2026-11-08T19:12:33.580527+00:00",
+    "version_evaluacion": "9c3cdee22199eccff67e59ae5e40d53e018c16e69c7543ef562e546ea33bbf94",
+    "sha256_csv": "90d5fb6bd1630cd4de4b4d28fcf8b4cb92a8f6ab7484605b0799d47386f7dbe1",
+    "consumo": [
+      {
+        "tokens": {
+          "promptTokenCount": 1628,
+          "candidatesTokenCount": 22,
+          "totalTokenCount": 1650
+        },
+        "costo_estimado_usd": 0.0033,
+        "acumulado_usd": 0.013214,
+        "modo_tarifa": "didactica"
+      }
+    ]
+  },
+  {
+    "id": "imputacion",
+    "consulta": "¿Hace falta imputar nulos en este archivo?",
+    "referencia": "No se necesita imputación por valores faltantes porque no se observaron nulos.",
+    "respuesta": "Soy ModelLab AI. Según los datos observados, no hace falta imputar nulos ya que todas las columnas tienen un 0.0% de valores nulos.",
+    "precision": 0.13043478260869565,
+    "cobertura": 0.25,
+    "f1": 0.1714285714285714,
+    "coincidencia_cruda": 0.2727272727272727,
+    "coincidencia_procesada": 0.3,
+    "modelo": "gemini-3.5-flash-lite",
+    "fecha_utc": "2026-11-08T19:12:49.576542+00:00",
+    "version_evaluacion": "9c3cdee22199eccff67e59ae5e40d53e018c16e69c7543ef562e546ea33bbf94",
+    "sha256_csv": "90d5fb6bd1630cd4de4b4d28fcf8b4cb92a8f6ab7484605b0799d47386f7dbe1",
+    "consumo": [
+      {
+        "tokens": {
+          "promptTokenCount": 1629,
+          "candidatesTokenCount": 35,
+          "totalTokenCount": 1664
+        },
+        "costo_estimado_usd": 0.003328,
+        "acumulado_usd": 0.016542,
+        "modo_tarifa": "didactica"
+      }
+    ]
+  },
+  {
+    "id": "positivos",
+    "consulta": "¿Cuántos clientes pertenecen a Churn igual a 1?",
+    "referencia": "Hay 495 registros con Churn igual a 1.",
+    "respuesta": "Según los datos observados, hay 495 registros donde Churn es igual a 1 (clase positiva). Como recomendación, se sugiere tener en cuenta este desbalance del 15.71% al entrenar modelos de predicción de abandono.",
+    "precision": 0.21212121212121213,
+    "cobertura": 0.875,
+    "f1": 0.3414634146341463,
+    "coincidencia_cruda": 0.625,
+    "coincidencia_procesada": 0.875,
+    "modelo": "gemini-3.5-flash-lite",
+    "fecha_utc": "2026-11-08T19:13:06.436649+00:00",
+    "version_evaluacion": "9c3cdee22199eccff67e59ae5e40d53e018c16e69c7543ef562e546ea33bbf94",
+    "sha256_csv": "90d5fb6bd1630cd4de4b4d28fcf8b4cb92a8f6ab7484605b0799d47386f7dbe1",
+    "consumo": [
+      {
+        "tokens": {
+          "promptTokenCount": 1631,
+          "candidatesTokenCount": 56,
+          "totalTokenCount": 1687
+        },
+        "costo_estimado_usd": 0.0033740000000000003,
+        "acumulado_usd": 0.019916000000000003,
+        "modo_tarifa": "didactica"
+      }
+    ]
+  },
+  {
+    "id": "negativos",
+    "consulta": "¿Cuántos clientes pertenecen a Churn igual a 0?",
+    "referencia": "Hay 2655 registros con Churn igual a 0.",
+    "respuesta": "Como dato observado, existen 2655 registros que pertenecen a la clase Churn igual a 0.",
+    "precision": 0.4,
+    "cobertura": 0.75,
+    "f1": 0.5217391304347827,
+    "coincidencia_cruda": 0.75,
+    "coincidencia_procesada": 0.75,
+    "modelo": "gemini-3.5-flash-lite",
+    "fecha_utc": "2026-11-08T19:13:22.423916+00:00",
+    "version_evaluacion": "9c3cdee22199eccff67e59ae5e40d53e018c16e69c7543ef562e546ea33bbf94",
+    "sha256_csv": "90d5fb6bd1630cd4de4b4d28fcf8b4cb92a8f6ab7484605b0799d47386f7dbe1",
+    "consumo": [
+      {
+        "tokens": {
+          "promptTokenCount": 1631,
+          "candidatesTokenCount": 23,
+          "totalTokenCount": 1654
+        },
+        "costo_estimado_usd": 0.0033079999999999997,
+        "acumulado_usd": 0.023224,
+        "modo_tarifa": "didactica"
+      }
+    ]
+  },
+  {
+    "id": "balance",
+    "consulta": "¿Qué porcentaje representa la clase positiva? Redondea a dos decimales.",
+    "referencia": "La clase positiva representa el 15.71% de los registros.",
+    "respuesta": "Soy ModelLab AI. Según los datos observados, el porcentaje que representa la clase positiva (abandono) es del 15,71%.",
+    "precision": 0.3888888888888889,
+    "cobertura": 0.7777777777777778,
+    "f1": 0.5185185185185185,
+    "coincidencia_cruda": 0.5555555555555556,
+    "coincidencia_procesada": 0.7777777777777778,
+    "modelo": "gemini-3.5-flash-lite",
+    "fecha_utc": "2026-11-08T19:13:38.946767+00:00",
+    "version_evaluacion": "9c3cdee22199eccff67e59ae5e40d53e018c16e69c7543ef562e546ea33bbf94",
+    "sha256_csv": "90d5fb6bd1630cd4de4b4d28fcf8b4cb92a8f6ab7484605b0799d47386f7dbe1",
+    "consumo": [
+      {
+        "tokens": {
+          "promptTokenCount": 1634,
+          "candidatesTokenCount": 31,
+          "totalTokenCount": 1665
+        },
+        "costo_estimado_usd": 0.00333,
+        "acumulado_usd": 0.026554,
+        "modo_tarifa": "didactica"
+      }
+    ]
+  },
+  {
+    "id": "desbalance",
+    "consulta": "¿Las clases tienen la misma frecuencia?",
+    "referencia": "No. La clase 0 es mayoritaria y la clase 1 es minoritaria.",
+    "respuesta": "Como dato observado, las clases no tienen la misma frecuencia: la clase 0 (\"no abandona\") representa el 84,2857% (2655 registros) y la clase 1 (\"abandona\") el 15,7143% (495 registros). Como recomendación, se sugiere tener en cuenta este desbalance al entrenar el modelo para predecir el abandono.",
+    "precision": 0.17391304347826086,
+    "cobertura": 0.6666666666666666,
+    "f1": 0.27586206896551724,
+    "coincidencia_cruda": 0.5,
+    "coincidencia_procesada": 0.6666666666666666,
+    "modelo": "gemini-3.5-flash-lite",
+    "fecha_utc": "2026-11-08T19:13:55.180508+00:00",
+    "version_evaluacion": "9c3cdee22199eccff67e59ae5e40d53e018c16e69c7543ef562e546ea33bbf94",
+    "sha256_csv": "90d5fb6bd1630cd4de4b4d28fcf8b4cb92a8f6ab7484605b0799d47386f7dbe1",
+    "consumo": [
+      {
+        "tokens": {
+          "promptTokenCount": 1626,
+          "candidatesTokenCount": 89,
+          "totalTokenCount": 1715
+        },
+        "costo_estimado_usd": 0.0034300000000000003,
+        "acumulado_usd": 0.029984,
+        "modo_tarifa": "didactica"
+      }
+    ]
+  },
+  {
+    "id": "duplicados",
+    "consulta": "¿Cuántas filas repetidas adicionales detecta el perfil?",
+    "referencia": "Se detectan 300 filas duplicadas adicionales.",
+    "respuesta": "Como dato observado, el perfil detecta 300 duplicados exactos adicionales. Se recomienda revisar estos registros en grupos duplicados para asegurar la calidad de los datos del dataset `iranian_churn`.",
+    "precision": 0.10714285714285714,
+    "cobertura": 0.5,
+    "f1": 0.17647058823529413,
+    "coincidencia_cruda": 0.5,
+    "coincidencia_procesada": 0.5,
+    "modelo": "gemini-3.5-flash-lite",
+    "fecha_utc": "2026-11-08T19:14:11.194519+00:00",
+    "version_evaluacion": "9c3cdee22199eccff67e59ae5e40d53e018c16e69c7543ef562e546ea33bbf94",
+    "sha256_csv": "90d5fb6bd1630cd4de4b4d28fcf8b4cb92a8f6ab7484605b0799d47386f7dbe1",
+    "consumo": [
+      {
+        "tokens": {
+          "promptTokenCount": 1630,
+          "candidatesTokenCount": 42,
+          "totalTokenCount": 1672
+        },
+        "costo_estimado_usd": 0.0033439999999999998,
+        "acumulado_usd": 0.033327999999999997,
+        "modo_tarifa": "didactica"
+      }
+    ]
+  },
+  {
+    "id": "identidad",
+    "consulta": "¿Las filas idénticas demuestran que son el mismo cliente?",
+    "referencia": "No. Sin un identificador verificable no se puede confirmar que sean el mismo cliente.",
+    "respuesta": "Como ModelLab AI, informo que el conjunto de datos contiene 300 duplicados exactos adicionales y 465 registros en grupos duplicados, pero la unidad de observación es una fila por registro sin identificador verificable en el CSV. Por lo tanto, los datos observados no permiten demostrar que las filas idénticas correspondan al mismo cliente.",
+    "precision": 0.1509433962264151,
+    "cobertura": 0.5714285714285714,
+    "f1": 0.23880597014925373,
+    "coincidencia_cruda": 0.5,
+    "coincidencia_procesada": 0.6153846153846154,
+    "modelo": "gemini-3.5-flash-lite",
+    "fecha_utc": "2026-11-08T19:14:27.075481+00:00",
+    "version_evaluacion": "9c3cdee22199eccff67e59ae5e40d53e018c16e69c7543ef562e546ea33bbf94",
+    "sha256_csv": "90d5fb6bd1630cd4de4b4d28fcf8b4cb92a8f6ab7484605b0799d47386f7dbe1",
+    "consumo": [
+      {
+        "tokens": {
+          "promptTokenCount": 1633,
+          "candidatesTokenCount": 75,
+          "totalTokenCount": 1708
+        },
+        "costo_estimado_usd": 0.003416,
+        "acumulado_usd": 0.036744,
+        "modo_tarifa": "didactica"
+      }
+    ]
+  },
+  {
+    "id": "particion",
+    "consulta": "¿Cómo evitar que filas idénticas aparezcan en entrenamiento y prueba?",
+    "referencia": "Agrupar las filas con los mismos predictores y mantener cada grupo en una sola partición.",
+    "respuesta": "Como ModelLab AI, informo que los datos observados muestran 300 duplicados exactos adicionales y 465 registros en grupos duplicados dentro de las 3,150 filas totales. Se recomienda implementar una partición a nivel de grupos duplicados antes del entrenamiento y prueba para evitar la fuga de datos.",
+    "precision": 0.15217391304347827,
+    "cobertura": 0.4666666666666667,
+    "f1": 0.22950819672131148,
+    "coincidencia_cruda": 0.4,
+    "coincidencia_procesada": 0.4666666666666667,
+    "modelo": "gemini-3.5-flash-lite",
+    "fecha_utc": "2026-11-08T19:14:43.246640+00:00",
+    "version_evaluacion": "9c3cdee22199eccff67e59ae5e40d53e018c16e69c7543ef562e546ea33bbf94",
+    "sha256_csv": "90d5fb6bd1630cd4de4b4d28fcf8b4cb92a8f6ab7484605b0799d47386f7dbe1",
+    "consumo": [
+      {
+        "tokens": {
+          "promptTokenCount": 1633,
+          "candidatesTokenCount": 68,
+          "totalTokenCount": 1701
+        },
+        "costo_estimado_usd": 0.003402,
+        "acumulado_usd": 0.040146,
+        "modo_tarifa": "didactica"
+      }
+    ]
+  },
+  {
+    "id": "ventana",
+    "consulta": "¿Cuál es la ventana de observación y el horizonte documentado?",
+    "referencia": "Los atributos agregan los primeros 9 meses y el abandono se observa al mes 12, con una brecha de 3 meses.",
+    "respuesta": "Según los datos observados, la ventana utiliza los atributos de los primeros 9 meses con el abandono registrado en el mes 12, dejando una brecha de 3 meses según UCI. Como recomendación, se debe tener en cuenta que el CSV no contiene fechas individuales para verificar un corte cronológico.",
+    "precision": 0.3469387755102041,
+    "cobertura": 0.8095238095238095,
+    "f1": 0.4857142857142857,
+    "coincidencia_cruda": 0.7142857142857143,
+    "coincidencia_procesada": 0.7894736842105263,
+    "modelo": "gemini-3.5-flash-lite",
+    "fecha_utc": "2026-11-08T19:15:00.063867+00:00",
+    "version_evaluacion": "9c3cdee22199eccff67e59ae5e40d53e018c16e69c7543ef562e546ea33bbf94",
+    "sha256_csv": "90d5fb6bd1630cd4de4b4d28fcf8b4cb92a8f6ab7484605b0799d47386f7dbe1",
+    "consumo": [
+      {
+        "tokens": {
+          "promptTokenCount": 1631,
+          "candidatesTokenCount": 63,
+          "totalTokenCount": 1694
+        },
+        "costo_estimado_usd": 0.003388,
+        "acumulado_usd": 0.043534,
+        "modo_tarifa": "didactica"
+      }
+    ]
+  },
+  {
+    "id": "fechas",
+    "consulta": "¿Permite este CSV verificar una partición cronológica?",
+    "referencia": "No. El CSV no contiene fechas individuales para verificar una partición cronológica.",
+    "respuesta": "Como ModelLab AI, informo que los datos observados indican que el CSV no contiene fechas individuales, por lo que no se puede verificar un corte cronológico. Se recomienda tener en cuenta que el archivo carece de un identificador verificable para este propósito.",
+    "precision": 0.21428571428571427,
+    "cobertura": 0.75,
+    "f1": 0.3333333333333333,
+    "coincidencia_cruda": 0.5,
+    "coincidencia_procesada": 0.7272727272727273,
+    "modelo": "gemini-3.5-flash-lite",
+    "fecha_utc": "2026-11-08T19:15:16.155687+00:00",
+    "version_evaluacion": "9c3cdee22199eccff67e59ae5e40d53e018c16e69c7543ef562e546ea33bbf94",
+    "sha256_csv": "90d5fb6bd1630cd4de4b4d28fcf8b4cb92a8f6ab7484605b0799d47386f7dbe1",
+    "consumo": [
+      {
+        "tokens": {
+          "promptTokenCount": 1630,
+          "candidatesTokenCount": 53,
+          "totalTokenCount": 1683
+        },
+        "costo_estimado_usd": 0.003366,
+        "acumulado_usd": 0.046900000000000004,
+        "modo_tarifa": "didactica"
+      }
+    ]
+  },
+  {
+    "id": "tarifa",
+    "consulta": "¿Tariff Plan es una cantidad continua solo por estar almacenada como entero?",
+    "referencia": "No. Tariff Plan es una variable categórica codificada con los valores 1 y 2.",
+    "respuesta": "Como ModelLab AI, informo que el perfil observa `Tariff Plan` como una variable categórica con códigos `[1, 2]` y un total de 2 valores distintos, no como una cantidad continua. Se recomienda tratar esta columna como categórica según su codificación descrita en el perfil.",
+    "precision": 0.25,
+    "cobertura": 0.7857142857142857,
+    "f1": 0.37931034482758624,
+    "coincidencia_cruda": 0.42857142857142855,
+    "coincidencia_procesada": 0.7857142857142857,
+    "modelo": "gemini-3.5-flash-lite",
+    "fecha_utc": "2026-11-08T19:15:32.899542+00:00",
+    "version_evaluacion": "9c3cdee22199eccff67e59ae5e40d53e018c16e69c7543ef562e546ea33bbf94",
+    "sha256_csv": "90d5fb6bd1630cd4de4b4d28fcf8b4cb92a8f6ab7484605b0799d47386f7dbe1",
+    "consumo": [
+      {
+        "tokens": {
+          "promptTokenCount": 1634,
+          "candidatesTokenCount": 63,
+          "totalTokenCount": 1697
+        },
+        "costo_estimado_usd": 0.0033940000000000003,
+        "acumulado_usd": 0.050294000000000005,
+        "modo_tarifa": "didactica"
+      }
+    ]
+  },
+  {
+    "id": "cargo",
+    "consulta": "¿El rango observado de Charge Amount respeta el dominio documentado 0 a 9?",
+    "referencia": "No. El máximo observado es 10, fuera del dominio documentado de 0 a 9.",
+    "respuesta": "Soy ModelLab AI. Según los datos observados, `Charge Amount` presenta un valor máximo de 10.0, lo que excede el límite superior del dominio documentado (0 a 9) y registra 7 valores fuera de dicho dominio. Como recomendación, se sugiere revisar y limpiar estos registros antes de entrenar cualquier modelo.",
+    "precision": 0.20408163265306123,
+    "cobertura": 0.7142857142857143,
+    "f1": 0.31746031746031744,
+    "coincidencia_cruda": 0.5,
+    "coincidencia_procesada": 0.7142857142857143,
+    "modelo": "gemini-3.5-flash-lite",
+    "fecha_utc": "2026-11-08T19:15:48.759705+00:00",
+    "version_evaluacion": "9c3cdee22199eccff67e59ae5e40d53e018c16e69c7543ef562e546ea33bbf94",
+    "sha256_csv": "90d5fb6bd1630cd4de4b4d28fcf8b4cb92a8f6ab7484605b0799d47386f7dbe1",
+    "consumo": [
+      {
+        "tokens": {
+          "promptTokenCount": 1637,
+          "candidatesTokenCount": 71,
+          "totalTokenCount": 1708
+        },
+        "costo_estimado_usd": 0.003416,
+        "acumulado_usd": 0.05371000000000001,
+        "modo_tarifa": "didactica"
+      }
+    ]
+  },
+  {
+    "id": "uso",
+    "consulta": "¿Cuál es el rango observado de Seconds of Use?",
+    "referencia": "Seconds of Use varía entre 0 y 17090.",
+    "respuesta": "Como ModelLab AI, informo que el rango observado de *Seconds of Use* va desde un mínimo de 0.0 hasta un máximo de 17090.0.",
+    "precision": 0.13043478260869565,
+    "cobertura": 0.375,
+    "f1": 0.19354838709677416,
+    "coincidencia_cruda": 0.125,
+    "coincidencia_procesada": 0.375,
+    "modelo": "gemini-3.5-flash-lite",
+    "fecha_utc": "2026-11-08T19:16:05.272801+00:00",
+    "version_evaluacion": "9c3cdee22199eccff67e59ae5e40d53e018c16e69c7543ef562e546ea33bbf94",
+    "sha256_csv": "90d5fb6bd1630cd4de4b4d28fcf8b4cb92a8f6ab7484605b0799d47386f7dbe1",
+    "consumo": [
+      {
+        "tokens": {
+          "promptTokenCount": 1629,
+          "candidatesTokenCount": 39,
+          "totalTokenCount": 1668
+        },
+        "costo_estimado_usd": 0.003336,
+        "acumulado_usd": 0.057046000000000006,
+        "modo_tarifa": "didactica"
+      }
+    ]
+  },
+  {
+    "id": "ajuste",
+    "consulta": "¿Dónde se ajustan los imputadores y escaladores durante la validación?",
+    "referencia": "Los imputadores y escaladores se ajustan solo con entrenamiento y se aplican después a validación o prueba.",
+    "respuesta": "Como ModelLab AI, informo que el perfil y contexto no contienen datos observados sobre el ajuste de imputadores y escaladores, pero se recomienda ajustarlos estrictamente dentro de cada pliegue de entrenamiento durante la validación para evitar filtración de datos.",
+    "precision": 0.1794871794871795,
+    "cobertura": 0.4117647058823529,
+    "f1": 0.25,
+    "coincidencia_cruda": 0.3333333333333333,
+    "coincidencia_procesada": 0.4,
+    "modelo": "gemini-3.5-flash-lite",
+    "fecha_utc": "2026-11-08T19:16:21.280485+00:00",
+    "version_evaluacion": "9c3cdee22199eccff67e59ae5e40d53e018c16e69c7543ef562e546ea33bbf94",
+    "sha256_csv": "90d5fb6bd1630cd4de4b4d28fcf8b4cb92a8f6ab7484605b0799d47386f7dbe1",
+    "consumo": [
+      {
+        "tokens": {
+          "promptTokenCount": 1634,
+          "candidatesTokenCount": 53,
+          "totalTokenCount": 1687
+        },
+        "costo_estimado_usd": 0.0033740000000000003,
+        "acumulado_usd": 0.06042000000000001,
+        "modo_tarifa": "didactica"
+      }
+    ]
+  },
+  {
+    "id": "metricas",
+    "consulta": "¿Basta con accuracy para evaluar este problema desbalanceado?",
+    "referencia": "No. Conviene evaluar precisión, recall y F1 de la clase positiva y PR-AUC, además de la matriz de confusión.",
+    "respuesta": "Soy ModelLab AI. Según los datos observados, el dataset de telecomunicaciones presenta desbalance (15.71% de abandono frente a 84.29% de no abandono); por lo tanto, se recomienda no usar exclusivamente el accuracy, ya que una métrica como esta puede enmascarar un desempeño pobre en la clase minoritaria.",
+    "precision": 0.1276595744680851,
+    "cobertura": 0.3157894736842105,
+    "f1": 0.1818181818181818,
+    "coincidencia_cruda": 0.2,
+    "coincidencia_procesada": 0.26666666666666666,
+    "modelo": "gemini-3.5-flash-lite",
+    "fecha_utc": "2026-11-08T19:16:38.206840+00:00",
+    "version_evaluacion": "9c3cdee22199eccff67e59ae5e40d53e018c16e69c7543ef562e546ea33bbf94",
+    "sha256_csv": "90d5fb6bd1630cd4de4b4d28fcf8b4cb92a8f6ab7484605b0799d47386f7dbe1",
+    "consumo": [
+      {
+        "tokens": {
+          "promptTokenCount": 1631,
+          "candidatesTokenCount": 76,
+          "totalTokenCount": 1707
+        },
+        "costo_estimado_usd": 0.0034140000000000004,
+        "acumulado_usd": 0.063834,
+        "modo_tarifa": "didactica"
+      }
+    ]
+  },
+  {
+    "id": "resultados",
+    "consulta": "¿Qué rendimiento predictivo ha demostrado el perfilado?",
+    "referencia": "Ninguno. El perfilado no entrena modelos ni demuestra rendimiento predictivo.",
+    "respuesta": "Como ModelLab AI, informo que el perfilado observa 3,150 filas y 14 columnas para predecir el abandono (`Churn`), sin incluir métricas de rendimiento predictivo. Se recomienda evaluar modelos utilizando la columna objetivo y la ventana temporal definida en el contexto.",
+    "precision": 0.125,
+    "cobertura": 0.5,
+    "f1": 0.2,
+    "coincidencia_cruda": 0.4,
+    "coincidencia_procesada": 0.5,
+    "modelo": "gemini-3.5-flash-lite",
+    "fecha_utc": "2026-11-08T19:16:54.202875+00:00",
+    "version_evaluacion": "9c3cdee22199eccff67e59ae5e40d53e018c16e69c7543ef562e546ea33bbf94",
+    "sha256_csv": "90d5fb6bd1630cd4de4b4d28fcf8b4cb92a8f6ab7484605b0799d47386f7dbe1",
+    "consumo": [
+      {
+        "tokens": {
+          "promptTokenCount": 1629,
+          "candidatesTokenCount": 60,
+          "totalTokenCount": 1689
+        },
+        "costo_estimado_usd": 0.0033780000000000004,
+        "acumulado_usd": 0.06721200000000001,
+        "modo_tarifa": "didactica"
+      }
+    ]
+  }
+]

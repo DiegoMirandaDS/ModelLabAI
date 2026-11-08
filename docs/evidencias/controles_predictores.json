@@ -1,0 +1,6 @@
+{
+  "criterio_grupo": "Todas las columnas predictoras, excluyendo Churn",
+  "grupos_con_etiquetas_distintas": 14,
+  "grupos_con_mas_de_un_registro": 162,
+  "interpretacion": "Perfiles iguales no prueban identidad; se mantienen juntos al proponer particiones"
+}

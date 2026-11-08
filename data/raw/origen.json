@@ -1,0 +1,9 @@
+{
+  "dataset": "Iranian Churn",
+  "fuente": "https://archive.ics.uci.edu/dataset/563/iranian+churn+dataset",
+  "descarga": "https://archive.ics.uci.edu/static/public/563/iranian%2Bchurn%2Bdataset.zip",
+  "doi": "10.24432/C5JW3Z",
+  "licencia": "CC BY 4.0",
+  "sha256": "90d5fb6bd1630cd4de4b4d28fcf8b4cb92a8f6ab7484605b0799d47386f7dbe1",
+  "transformacion": "Ninguna; archivo renombrado a iranian_churn.csv"
+}

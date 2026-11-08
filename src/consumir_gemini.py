@@ -114,18 +114,26 @@ def enviar_peticion(url, headers, body):
 
 
 def extraer_texto(datos):
-    """Extrae el texto generado desde la respuesta JSON."""
+    """Extrae texto final completo; rechaza cortes y excluye partes de razonamiento."""
     try:
-        texto = datos["candidates"][0]["content"]["parts"][0]["text"]
+        candidato = datos["candidates"][0]
+        motivo = candidato.get("finishReason")
+        if motivo is not None and motivo != "STOP":
+            raise RuntimeError(f"La respuesta de Gemini no terminó correctamente: {motivo}")
+        partes = candidato["content"]["parts"]
+        textos = [parte["text"] for parte in partes if not parte.get("thought") and "text" in parte]
+        if not textos:
+            raise KeyError("text")
+        if not all(isinstance(texto, str) for texto in textos):
+            raise RuntimeError("El texto generado tiene un formato inesperado.")
+        texto = "".join(textos)
     except (KeyError, IndexError, TypeError) as error:
         raise RuntimeError(
             "La respuesta de Gemini no contiene el texto esperado."
         ) from error
 
-    if not isinstance(texto, str):
-        raise RuntimeError(
-            "El texto generado tiene un formato inesperado."
-        )
+    if not texto.strip():
+        raise RuntimeError("La respuesta de Gemini no contiene el texto esperado.")
 
     return texto
 

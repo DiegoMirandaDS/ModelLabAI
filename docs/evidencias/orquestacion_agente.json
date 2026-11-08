@@ -1,0 +1,351 @@
+[
+  {
+    "id": "cadena",
+    "modo": "cadena",
+    "entrada": "Propón preparación y validación para predecir abandono con este perfil.",
+    "esperado": null,
+    "verificacion": "correcta",
+    "resultado": {
+      "diagnostico": "**Diagnóstico de Calidad y Riesgos:**\n1. **Ausencia de Identificador y Fechas:** Sin ID de cliente ni marcas temporales explícitas, no es posible verificar duplicados reales ni garantizar un corte cronológico estricto para evitar *data leakage*.\n2. **Duplicados Ambiguos:** Existen 465 registros en grupos duplicados, pero al no haber identificador verificable, eliminarlos podría destruir información genuina.\n3. **Desbalance de Clases:** La variable objetivo `Churn` está desbalanceada (~15.7% positivos), lo que requiere métricas orientadas a clases minoritarias (ej. F1-score, PR-AUC).\n4. **Códigos Categóricos como Numéricos:** Variables como `Complains`, `Age Group`, `Tariff Plan`, `Status` y `Charge Amount` son códigos categóricos representados como enteros que no deben tratarse como cantidades continuas.\n\n---\n\n**Propuesta de Preparación y Validación:**\n\n* **Preparación:** \n  - Tratar los códigos categóricos (`Age Group`, `Tariff Plan`, `Status`, `Charge Amount`, `Complains`) como variables categóricas (one-hot o *target encoding* según el modelo), preservando las cantidades reales (ej. `Seconds of Use`, `Frequency of SMS`).\n  - Mantener los duplicados detectados hasta verificar la identidad de los registros. \n  - Ajustar las transformaciones (escalado, codificación) **exclusivamente** en los conjuntos de entrenamiento, aplicándolas luego sin reajustar en validación y prueba.\n* **Validación:** \n  - Implementar validación cruzada estratificada (respetando la proporción de clases) o partición temporal si se reconstruye una secuencia lógica.\n  - Utilizar técnicas de manejo de desbalance (como pesos en la función de costo) solo en el set de entrenamiento.",
+      "preparacion": "Como ModelLab AI, aquí tienes 4 decisiones de preparación justificadas basadas en el diagnóstico:\n\n1. **Tratamiento de códigos categóricos:** Convertir `Age Group`, `Tariff Plan`, `Status`, `Charge Amount` y `Complains` a variables categóricas (ej. *one-hot encoding*), separándolas de las cantidades continuas (ej. `Seconds of Use`, `Customer Value`) para evitar asumir orden o distancia numérica incorrectos.\n2. **Conservación de duplicados:** No eliminar los 465 registros en grupos duplicados. Dado que no existe un identificador verificable en el CSV, borrarlos podría destruir observaciones legítimas del fenómeno de abandono.\n3. **Aislamiento de transformaciones:** Ajustar cualquier escalado o codificación **únicamente** en los conjuntos de entrenamiento, aplicándolos después a validación y prueba sin reajustar, previniendo así la fuga de datos (*data leakage*).\n4. **Validación estratificada y métricas robustas:** Diseñar un esquema de validación cruzada estratificada (dada la incertidumbre temporal y el desbalance del ~15.7% en `Churn`) y evaluar el rendimiento mediante métricas orientadas a la clase minoritaria (como PR-AUC o F1-score), aplicando ajustes de desbalance (ej. pesos de clase) exclusivamente en entrenamiento.",
+      "estrategia": "**Estrategia de ModelLab AI (Clasificación Binaria):**\n\n* **Partición sin solapar:** Dividir los datos estratificadamente (para preservar el 15.7% de la clase positiva `1`), asegurando que los grupos con predictores idénticos no se dividan entre entrenamiento y prueba para evitar filtración de información.\n* **Ajuste solo en entrenamiento:** Toda transformación (escalado de cantidades, codificación de códigos categóricos como `Age Group` o `Tariff Plan`) se ajustará estrictamente en el conjunto de entrenamiento y se aplicará sin reajustar a la validación.\n* **Baseline y Métricas:** Establecer como *baseline* un modelo de 1eros vecinos o mayoría (predecir clase 0). Evaluar la clase positiva (`1`) usando *Precision*, *Recall*, *F1-score* y *PR-AUC*, ignorando el *Accuracy* global debido al desbalance.\n* **Límite temporal:** La ausencia de fechas individuales en el CSV impide verificar un corte cronológico estricto, obligando a usar validación estratificada estándar en lugar de una partición estrictamente temporal."
+    },
+    "modelo": "gemini-3.5-flash-lite",
+    "sha256_csv": "90d5fb6bd1630cd4de4b4d28fcf8b4cb92a8f6ab7484605b0799d47386f7dbe1",
+    "fecha_utc": "2026-11-08T19:17:41.646513+00:00",
+    "llamadas": [
+      {
+        "tokens": {
+          "input_tokens": 1676,
+          "output_tokens": 412,
+          "total_tokens": 2088,
+          "input_token_details": {
+            "cache_read": 0
+          }
+        },
+        "modelo_reportado": "gemini-3.5-flash-lite",
+        "finish_reason": "STOP"
+      },
+      {
+        "tokens": {
+          "input_tokens": 2109,
+          "output_tokens": 293,
+          "total_tokens": 2402,
+          "input_token_details": {
+            "cache_read": 0
+          }
+        },
+        "modelo_reportado": "gemini-3.5-flash-lite",
+        "finish_reason": "STOP"
+      },
+      {
+        "tokens": {
+          "input_tokens": 2420,
+          "output_tokens": 249,
+          "total_tokens": 2669,
+          "input_token_details": {
+            "cache_read": 0
+          }
+        },
+        "modelo_reportado": "gemini-3.5-flash-lite",
+        "finish_reason": "STOP"
+      }
+    ]
+  },
+  {
+    "id": "ruta_preparacion",
+    "modo": "enrutamiento",
+    "entrada": "Revisa los nulos y la calidad de los datos antes de preparar el ETL.",
+    "esperado": "preparacion",
+    "verificacion": "correcta",
+    "resultado": {
+      "categoria": "preparacion",
+      "diagnostico": "Como ModelLab AI, aquí tienes el diagnóstico de calidad y riesgos del perfil:\n\n1. **Ausencia de nulos pero presencia de anomalías categóricas:** No hay valores nulos ($0.0\\%$), pero la columna `Charge Amount` registra 7 valores fuera de su dominio definido ($0$ a $9$). Se requiere validación previa en el ETL.\n2. **Riesgo de duplicados sin verificar:** Existen 300 duplicados exactos y 465 registros en grupos duplicados. Sin un identificador de cliente verificable, **no se deben eliminar** automáticamente para evitar sesgos o pérdida de información real.\n3. **Confusión entre códigos y cantidades:** Variables como `Complains`, `Tariff Plan`, `Status` y `Age Group` son códigos categóricos representados como enteros, al igual que `Charge Amount` (ordinal). No deben tratarse como cantidades continuas en el ETL.\n4. **Limitación temporal y desbalance:** El dataset carece de marcas de tiempo individuales para auditoría cronológica, y presenta un desbalance moderado en la variable objetivo `Churn` ($\\approx15.7\\%$ positivos), requiriendo manejo especial en las particiones de entrenamiento y prueba.",
+      "preparacion": "Como ModelLab AI, presento las siguientes 4 decisiones de preparación recomendadas (plan, no ejecución):\n\n1. **Tratamiento de `Charge Amount`:** Conservar la incertidumbre de los 7 valores fuera de dominio (esperados de 0 a 9) y tratarlos como categoría ordinal o faltante informada, sin corregirlos a ciegas.\n2. **Preservación de duplicados:** No eliminar los 300 duplicados exactos ni los 465 registros en grupos duplicados, debido a la ausencia de un identificador de cliente verificable en el CSV.\n3. **Tipado de variables categóricas:** Mapear explícitamente `Complains`, `Tariff Plan`, `Status`, `Age Group` y `Charge Amount` como variables categóricas o discretas, evitando tratarlas como cantidades continuas.\n4. **Particionado sin fuga de datos:** Asegurar que cualquier estrategia para mitigar el desbalance de `Churn` (~15.7% positivos) o escalado se ajuste estrictamente en los datos de entrenamiento, sin contaminar el conjunto de prueba y respetando la limitación temporal del dataset.",
+      "estrategia": "Como ModelLab AI, aquí tienes la estrategia de clasificación binaria solicitada:\n\n1. **Partición sin solapar grupos de predictores idénticos:** Para evitar fuga de información entre entrenamiento y prueba debido a registros con idénticos atributos (como los grupos duplicados), la división de los datos debe agruparse a nivel de vectores de características idénticos, asegurando que ninguna combinación idéntica de predictores aparezca simultáneamente en entrenamiento y prueba.\n2. **Ajuste solo en entrenamiento:** Cualquier transformación (como codificación o escalado) y el manejo del desbalance de la clase positiva (`Churn` = 1) se ajustarán exclusivamente sobre el conjunto de entrenamiento.\n3. **Baseline y métricas de la clase positiva:** El baseline será un modelo ingenuo que prediga la clase mayoritaria (`0`). Para la clase positiva (`1`, que representa el abandono), se evaluarán métricas específicas como Precisión, Exhaustividad (*Recall*), F1-Score y el Área bajo la Curva ROC (ROC-AUC).\n4. **Límite de no tener fechas individuales:** La ausencia de marcas de tiempo o fechas individuales en el CSV impide realizar un corte cronológico real (*Time-Based Split*). Esto limita la validación a un esquema aleatorio, sin poder simular con total fidelidad la ventana temporal de predicción futura (mes 12 a partir de los primeros 9 meses)."
+    },
+    "modelo": "gemini-3.5-flash-lite",
+    "sha256_csv": "90d5fb6bd1630cd4de4b4d28fcf8b4cb92a8f6ab7484605b0799d47386f7dbe1",
+    "fecha_utc": "2026-11-08T19:18:41.101497+00:00",
+    "llamadas": [
+      {
+        "tokens": {
+          "input_tokens": 67,
+          "output_tokens": 3,
+          "total_tokens": 70,
+          "input_token_details": {
+            "cache_read": 0
+          }
+        },
+        "modelo_reportado": "gemini-3.5-flash-lite",
+        "finish_reason": "STOP"
+      },
+      {
+        "tokens": {
+          "input_tokens": 1678,
+          "output_tokens": 260,
+          "total_tokens": 1938,
+          "input_token_details": {
+            "cache_read": 0
+          }
+        },
+        "modelo_reportado": "gemini-3.5-flash-lite",
+        "finish_reason": "STOP"
+      },
+      {
+        "tokens": {
+          "input_tokens": 1959,
+          "output_tokens": 247,
+          "total_tokens": 2206,
+          "input_token_details": {
+            "cache_read": 0
+          }
+        },
+        "modelo_reportado": "gemini-3.5-flash-lite",
+        "finish_reason": "STOP"
+      },
+      {
+        "tokens": {
+          "input_tokens": 2224,
+          "output_tokens": 299,
+          "total_tokens": 2523,
+          "input_token_details": {
+            "cache_read": 0
+          }
+        },
+        "modelo_reportado": "gemini-3.5-flash-lite",
+        "finish_reason": "STOP"
+      }
+    ]
+  },
+  {
+    "id": "ruta_modelado",
+    "modo": "enrutamiento",
+    "entrada": "Propón partición y métricas para evaluar un clasificador de abandono.",
+    "esperado": "modelado",
+    "verificacion": "correcta",
+    "resultado": {
+      "categoria": "modelado",
+      "diagnostico": "Soy ModelLab AI. Aquí tienes el diagnóstico y la recomendación solicitada:\n\n**Diagnóstico de Calidad y Riesgos:**\n1. **Ausencia de Identificador y Fechas:** Sin ID de cliente ni marcas temporales, no es posible verificar duplicados reales ni aplicar un corte cronológico estricto para la partición.\n2. **Duplicados sin Verificar:** Existen 465 registros en grupos duplicados (300 adicionales exactos) que no deben eliminarse automáticamente sin confirmar identidad.\n3. **Variables Categóricas Codificadas como Numéricas:** Columnas como `Complains`, `Age Group`, `Tariff Plan`, `Status` y `Charge Amount` son códigos categóricos (ordinales o nominales) que requieren tratamiento específico y no deben tratarse como cantidades continuas.\n4. **Desbalance de Clases:** La clase positiva (`Churn = 1`) representa el 15.7% (495 casos), lo que requiere métricas y técnicas adecuadas para evitar sesgos hacia la clase mayoritaria.\n\n**Plan Recomendado (Partición y Métricas):**\n* **Partición:** Dado que no hay fechas, se recomienda una división estratificada (ej. 80% entrenamiento, 20% prueba) para preservar la proporción de abandono. Las transformaciones (normalización, codificación) deben ajustarse **exclusivamente** con el conjunto de entrenamiento.\n* **Métricas de Evaluación:** Al ser un problema desbalanceado, se recomienda priorizar el **ROC-AUC** y el **PR-AUC** (Área bajo la curva Precision-Recall) para evaluar el clasificador globalmente, junto con **Precision**, **Recall** y **F1-Score** en el umbral óptimo de decisión para la clase 1.",
+      "preparacion": "Entendido. Como ModelLab AI, presento la recomendación solicitada basada estrictamente en la evidencia:\n\n**Decisiones de Preparación (Partición y Métricas):**\n\n1. **Estrategia de Partición (Aleatoria Estratificada):** Dado que el CSV carece de fechas individuales y de un identificador verificable, no es viable una partición cronológica. Se recomienda un muestreo aleatorio estratificado (ej. 80/20) para mantener la proporción de desbalance (15.7% de abandono) en ambos conjuntos.\n2. **Aislamiento de Transformaciones:** Se establece como regla estricta que cualquier ajuste de transformaciones (como escalado de cantidades o codificación de variables categóricas como `Age Group`, `Tariff Plan`, `Status` y `Charge Amount`) se realice **exclusivamente** sobre el conjunto de entrenamiento para evitar fuga de datos hacia la prueba.\n3. **Métricas de Evaluación Principal (PR-AUC y ROC-AUC):** Debido al desbalance de clases (495 positivos frente a 2655 negativos), se prioriza el uso de *Precision-Recall AUC* (PR-AUC) y *ROC-AUC* para medir la capacidad discriminativa del modelo sin depender de un umbral fijo.\n4. **Métricas Operativas de Umbral (Precision, Recall, F1-Score):** Se recomienda evaluar la clase positiva (`Churn = 1`) mediante *Precision*, *Recall* y *F1-Score* ajustando el umbral de decisión según el costo de negocio, conservando la incertidumbre sobre los 465 registros en grupos duplicados (los cuales no deben eliminarse sin verificar identidad).",
+      "estrategia": "Entendido. Como **ModelLab AI**, presento la estrategia breve solicitada basada estrictamente en la evidencia:\n\n* **Partición y Fechas:** Al no haber fechas individuales ni marcas cronológicas verificables, se descarta una partición temporal. Se recomienda una partición **aleatoria estratificada** (ej. 80% entrenamiento, 20% prueba) para preservar la proporción de la clase positiva (15.7%).\n* **Aislamiento de Transformaciones:** Los parámetros de cualquier transformación (como el escalado de cantidades o la codificación de variables categóricas como `Complains`, `Age Group`, `Tariff Plan`, `Status` y `Charge Amount`) deben ajustarse **exclusivamente en el conjunto de entrenamiento**.\n* **Límite de Duplicados:** No se deben eliminar los 300 duplicados adicionales (465 registros afectados) sin verificar la identidad del cliente, ya que el archivo carece de un identificador único verificable.\n* **Baseline y Métricas (Clase Positiva `Churn = 1`):** \n  * **Baseline:** Un modelo ingenuo que prediga la clase mayoritaria (`0`) o por probabilidad a priori (15.7%).\n  * **Métricas:** Debido al desbalance, se prioriza **PR-AUC** y **ROC-AUC** como métricas globales, junto con **Precision**, **Recall** y **F1-Score** evaluadas específicamente sobre la clase positiva en un umbral de decisión optimizado."
+    },
+    "modelo": "gemini-3.5-flash-lite",
+    "sha256_csv": "90d5fb6bd1630cd4de4b4d28fcf8b4cb92a8f6ab7484605b0799d47386f7dbe1",
+    "fecha_utc": "2026-11-08T19:19:39.513295+00:00",
+    "llamadas": [
+      {
+        "tokens": {
+          "input_tokens": 66,
+          "output_tokens": 2,
+          "total_tokens": 68,
+          "input_token_details": {
+            "cache_read": 0
+          }
+        },
+        "modelo_reportado": "gemini-3.5-flash-lite",
+        "finish_reason": "STOP"
+      },
+      {
+        "tokens": {
+          "input_tokens": 1676,
+          "output_tokens": 382,
+          "total_tokens": 2058,
+          "input_token_details": {
+            "cache_read": 0
+          }
+        },
+        "modelo_reportado": "gemini-3.5-flash-lite",
+        "finish_reason": "STOP"
+      },
+      {
+        "tokens": {
+          "input_tokens": 2079,
+          "output_tokens": 363,
+          "total_tokens": 2442,
+          "input_token_details": {
+            "cache_read": 0
+          }
+        },
+        "modelo_reportado": "gemini-3.5-flash-lite",
+        "finish_reason": "STOP"
+      },
+      {
+        "tokens": {
+          "input_tokens": 2460,
+          "output_tokens": 322,
+          "total_tokens": 2782,
+          "input_token_details": {
+            "cache_read": 0
+          }
+        },
+        "modelo_reportado": "gemini-3.5-flash-lite",
+        "finish_reason": "STOP"
+      }
+    ]
+  },
+  {
+    "id": "ruta_consulta",
+    "modo": "enrutamiento",
+    "entrada": "Hola, ¿en qué me puedes ayudar?",
+    "esperado": "consulta",
+    "verificacion": "correcta",
+    "resultado": {
+      "categoria": "consulta",
+      "respuesta": "Puedo estructurar el flujo analítico para tu proyecto de Machine Learning, asegurando la separación correcta entre entrenamiento y prueba. ¿Prefieres revisar la preparación de datos o el modelado?"
+    },
+    "modelo": "gemini-3.5-flash-lite",
+    "sha256_csv": "90d5fb6bd1630cd4de4b4d28fcf8b4cb92a8f6ab7484605b0799d47386f7dbe1",
+    "fecha_utc": "2026-11-08T19:20:07.903388+00:00",
+    "llamadas": [
+      {
+        "tokens": {
+          "input_tokens": 59,
+          "output_tokens": 1,
+          "total_tokens": 60,
+          "input_token_details": {
+            "cache_read": 0
+          }
+        },
+        "modelo_reportado": "gemini-3.5-flash-lite",
+        "finish_reason": "STOP"
+      },
+      {
+        "tokens": {
+          "input_tokens": 116,
+          "output_tokens": 38,
+          "total_tokens": 154,
+          "input_token_details": {
+            "cache_read": 0
+          }
+        },
+        "modelo_reportado": "gemini-3.5-flash-lite",
+        "finish_reason": "STOP"
+      }
+    ]
+  },
+  {
+    "id": "agente_perfil",
+    "modo": "agente",
+    "entrada": "Consulta el perfil de iranian_churn: ¿cuántas filas y columnas hay y cuántos nulos tiene?",
+    "esperado": "consultar_perfil_dataset",
+    "verificacion": "correcta",
+    "resultado": {
+      "respuesta": "El dataset `iranian_churn` tiene **3,150 filas** (registros) y **14 columnas**. No presenta valores nulos en ninguna de sus columnas.",
+      "pasos": [
+        {
+          "herramienta": "consultar_perfil_dataset",
+          "entrada": {
+            "dataset_id": "iranian_churn"
+          },
+          "observacion": "{\"dataset_id\": \"iranian_churn\", \"fuente\": \"https://archive.ics.uci.edu/dataset/563/iranian+churn+dataset\", \"contexto\": {\"unidad\": \"Una fila por registro de cliente; sin identificador verificable en el CSV\", \"objetivo_negocio\": \"Predecir abandono de clientes de telecomunicaciones\", \"columna_objetivo\": \"Churn\", \"clase_positiva\": 1, \"significado\": {\"0\": \"no abandona\", \"1\": \"abandona\"}, \"ventana\": \"Atributos de los primeros 9 meses; abandono al mes 12; brecha de 3 meses (UCI)\", \"limite_temporal\": \"El CSV no contiene fechas individuales: no permite verificar un corte cronológico\", \"codigos_categoricos\": {\"Complains\": [0, 1], \"Age Group\": [1, 2, 3, 4, 5], \"Tariff Plan\": [1, 2], \"Status\": [1, 2], \"Charge Amount\": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]}}, \"filas\": 3150, \"columnas_total\": 14, \"duplicados_exactos_adicionales\": 300, \"registros_en_grupos_duplicados\": 465, \"columnas\": [{\"nombre\": \"Call Failure\", \"tipo_observado\": \"int64\", \"nulos\": 0, \"nulos_pct\": 0.0, \"distintos\": 37, \"minimo\": 0.0, \"maximo\": 36.0, \"mediana\": 6.0}, {\"nombre\": \"Complains\", \"tipo_observado\": \"int64\", \"nulos\": 0, \"nulos_pct\": 0.0, \"distintos\": 2, \"minimo\": 0.0, \"maximo\": 1.0, \"mediana\": 0.0, \"valores_fuera_de_dominio\": 0}, {\"nombre\": \"Subscription Length\", \"tipo_observado\": \"int64\", \"nulos\": 0, \"nulos_pct\": 0.0, \"distintos\": 45, \"minimo\": 3.0, \"maximo\": 47.0, \"mediana\": 35.0}, {\"nombre\": \"Charge Amount\", \"tipo_observado\": \"int64\", \"nulos\": 0, \"nulos_pct\": 0.0, \"distintos\": 11, \"minimo\": 0.0, \"maximo\": 10.0, \"mediana\": 0.0, \"valores_fuera_de_dominio\": 7}, {\"nombre\": \"Seconds of Use\", \"tipo_observado\": \"int64\", \"nulos\": 0, \"nulos_pct\": 0.0, \"distintos\": 1756, \"minimo\": 0.0, \"maximo\": 17090.0, \"mediana\": 2990.0}, {\"nombre\": \"Frequency of use\", \"tipo_observado\": \"int64\", \"nulos\": 0, \"nulos_pct\": 0.0, \"distintos\": 242, \"minimo\": 0.0, \"maximo\": 255.0, \"mediana\": 54.0}, {\"nombre\": \"Frequency of SMS\", \"tipo_observado\": \"int64\", \"nulos\": 0, \"nulos_pct\": 0.0, \"distintos\": 405, \"minimo\": 0.0, \"maximo\": 522.0, \"mediana\": 21.0}, {\"nombre\": \"Distinct Called Numbers\", \"tipo_observado\": \"int64\", \"nulos\": 0, \"nulos_pct\": 0.0, \"distintos\": 92, \"minimo\": 0.0, \"maximo\": 97.0, \"mediana\": 21.0}, {\"nombre\": \"Age Group\", \"tipo_observado\": \"int64\", \"nulos\": 0, \"nulos_pct\": 0.0, \"distintos\": 5, \"minimo\": 1.0, \"maximo\": 5.0, \"mediana\": 3.0, \"valores_fuera_de_dominio\": 0}, {\"nombre\": \"Tariff Plan\", \"tipo_observado\": \"int64\", \"nulos\": 0, \"nulos_pct\": 0.0, \"distintos\": 2, \"minimo\": 1.0, \"maximo\": 2.0, \"mediana\": 1.0, \"valores_fuera_de_dominio\": 0}, {\"nombre\": \"Status\", \"tipo_observado\": \"int64\", \"nulos\": 0, \"nulos_pct\": 0.0, \"distintos\": 2, \"minimo\": 1.0, \"maximo\": 2.0, \"mediana\": 1.0, \"valores_fuera_de_dominio\": 0}, {\"nombre\": \"Age\", \"tipo_observado\": \"int64\", \"nulos\": 0, \"nulos_pct\": 0.0, \"distintos\": 5, \"minimo\": 15.0, \"maximo\": 55.0, \"mediana\": 30.0}, {\"nombre\": \"Customer Value\", \"tipo_observado\": \"float64\", \"nulos\": 0, \"nulos_pct\": 0.0, \"distintos\": 2654, \"minimo\": 0.0, \"maximo\": 2165.28, \"mediana\": 228.48}, {\"nombre\": \"Churn\", \"tipo_observado\": \"int64\", \"nulos\": 0, \"nulos_pct\": 0.0, \"distintos\": 2, \"minimo\": 0.0, \"maximo\": 1.0, \"mediana\": 0.0}], \"sha256_csv\": \"90d5fb6bd1630cd4de4b4d28fcf8b4cb92a8f6ab7484605b0799d47386f7dbe1\"}"
+        }
+      ]
+    },
+    "modelo": "gemini-3.5-flash-lite",
+    "sha256_csv": "90d5fb6bd1630cd4de4b4d28fcf8b4cb92a8f6ab7484605b0799d47386f7dbe1",
+    "fecha_utc": "2026-11-08T19:22:14.393080+00:00",
+    "llamadas": [
+      {
+        "tokens": {
+          "input_tokens": 302,
+          "output_tokens": 25,
+          "total_tokens": 327,
+          "input_token_details": {
+            "cache_read": 0
+          }
+        },
+        "modelo_reportado": "gemini-3.5-flash-lite",
+        "finish_reason": "STOP"
+      },
+      {
+        "tokens": {
+          "input_tokens": 1499,
+          "output_tokens": 38,
+          "total_tokens": 1537,
+          "input_token_details": {
+            "cache_read": 0
+          }
+        },
+        "modelo_reportado": "gemini-3.5-flash-lite",
+        "finish_reason": "STOP"
+      }
+    ]
+  },
+  {
+    "id": "agente_balance",
+    "modo": "agente",
+    "entrada": "Calcula el balance de Churn en iranian_churn: dame conteos y porcentajes de las dos clases.",
+    "esperado": "calcular_balance_objetivo",
+    "verificacion": "correcta",
+    "resultado": {
+      "respuesta": "El balance de la clase *Churn* en el dataset `iranian_churn` es el siguiente:\n\n* **Clase 0 (No Churn):** 2,655 registros (84.29%)\n* **Clase 1 (Churn):** 495 registros (15.71%)",
+      "pasos": [
+        {
+          "herramienta": "calcular_balance_objetivo",
+          "entrada": {
+            "dataset_id": "iranian_churn"
+          },
+          "observacion": "{\"columna\": \"Churn\", \"clase_positiva\": 1, \"conteos\": {\"0\": 2655, \"1\": 495}, \"porcentajes\": {\"0\": 84.2857, \"1\": 15.7143}}"
+        }
+      ]
+    },
+    "modelo": "gemini-3.5-flash-lite",
+    "sha256_csv": "90d5fb6bd1630cd4de4b4d28fcf8b4cb92a8f6ab7484605b0799d47386f7dbe1",
+    "fecha_utc": "2026-11-08T19:22:43.792585+00:00",
+    "llamadas": [
+      {
+        "tokens": {
+          "input_tokens": 302,
+          "output_tokens": 24,
+          "total_tokens": 326,
+          "input_token_details": {
+            "cache_read": 0
+          }
+        },
+        "modelo_reportado": "gemini-3.5-flash-lite",
+        "finish_reason": "STOP"
+      },
+      {
+        "tokens": {
+          "input_tokens": 392,
+          "output_tokens": 71,
+          "total_tokens": 463,
+          "input_token_details": {
+            "cache_read": 0
+          }
+        },
+        "modelo_reportado": "gemini-3.5-flash-lite",
+        "finish_reason": "STOP"
+      }
+    ]
+  },
+  {
+    "id": "agente_general",
+    "modo": "agente",
+    "entrada": "Explica en una frase qué significa ETL, sin consultar ningún dataset.",
+    "esperado": "ninguna",
+    "verificacion": "correcta",
+    "resultado": {
+      "respuesta": "ETL significa Extraer, Transformar y Cargar; un proceso para recopilar datos de distintas fuentes, adaptarlos y almacenarlos listos para su análisis.",
+      "pasos": []
+    },
+    "modelo": "gemini-3.5-flash-lite",
+    "sha256_csv": "90d5fb6bd1630cd4de4b4d28fcf8b4cb92a8f6ab7484605b0799d47386f7dbe1",
+    "fecha_utc": "2026-11-08T19:22:57.800529+00:00",
+    "llamadas": [
+      {
+        "tokens": {
+          "input_tokens": 292,
+          "output_tokens": 33,
+          "total_tokens": 325,
+          "input_token_details": {
+            "cache_read": 0
+          }
+        },
+        "modelo_reportado": "gemini-3.5-flash-lite",
+        "finish_reason": "STOP"
+      }
+    ]
+  }
+]

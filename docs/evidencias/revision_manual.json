@@ -1,0 +1,92 @@
+[
+  {
+    "id": "imputacion",
+    "grupo": "cinco_menores",
+    "f1": 0.1714285714285714,
+    "correccion_factual": "si",
+    "completitud": "si",
+    "contradiccion": "no",
+    "nota": "Indica que no hace falta imputar porque todas las columnas tienen 0% de nulos. Coincide con el perfil; el F1 bajo refleja otra redacción."
+  },
+  {
+    "id": "duplicados",
+    "grupo": "cinco_menores",
+    "f1": 0.17647058823529413,
+    "correccion_factual": "si",
+    "completitud": "si",
+    "contradiccion": "no",
+    "nota": "El conteo de 300 duplicados adicionales coincide con el perfil. La recomendación adicional de revisarlos no altera la respuesta solicitada."
+  },
+  {
+    "id": "metricas",
+    "grupo": "cinco_menores",
+    "f1": 0.1818181818181818,
+    "correccion_factual": "si",
+    "completitud": "parcialmente",
+    "contradiccion": "no",
+    "nota": "Los porcentajes de abandono y permanencia son correctos y explica el límite de accuracy. Omite las métricas alternativas y la matriz de confusión presentes en la referencia."
+  },
+  {
+    "id": "uso",
+    "grupo": "cinco_menores",
+    "f1": 0.19354838709677416,
+    "correccion_factual": "si",
+    "completitud": "si",
+    "contradiccion": "no",
+    "nota": "Los extremos 0.0 y 17090.0 son numéricamente iguales a 0 y 17090. La métrica compara los tokens 00 y 170900 con 0 y 17090, además de penalizar el texto adicional."
+  },
+  {
+    "id": "resultados",
+    "grupo": "cinco_menores",
+    "f1": 0.2,
+    "correccion_factual": "si",
+    "completitud": "parcialmente",
+    "contradiccion": "no",
+    "nota": "El tamaño de la tabla es correcto y no inventa resultados. Habla de ausencia de métricas, pero no responde explícitamente que el perfilado no entrena ni acredita rendimiento predictivo."
+  },
+  {
+    "id": "ventana",
+    "grupo": "cinco_mayores",
+    "f1": 0.4857142857142857,
+    "correccion_factual": "si",
+    "completitud": "si",
+    "contradiccion": "no",
+    "nota": "Los nueve meses de atributos, el abandono al mes doce y la brecha de tres meses coinciden con la fuente UCI. También reconoce que no hay fechas individuales."
+  },
+  {
+    "id": "objetivo",
+    "grupo": "cinco_mayores",
+    "f1": 0.5,
+    "correccion_factual": "si",
+    "completitud": "si",
+    "contradiccion": "no",
+    "nota": "Identifica Churn y el significado de la clase positiva 1 sin invertir la etiqueta."
+  },
+  {
+    "id": "balance",
+    "grupo": "cinco_mayores",
+    "f1": 0.5185185185185185,
+    "correccion_factual": "si",
+    "completitud": "si",
+    "contradiccion": "no",
+    "nota": "El 15,71% equivale al 15.71% de la referencia y al 495/3150 redondeado a dos decimales."
+  },
+  {
+    "id": "negativos",
+    "grupo": "cinco_mayores",
+    "f1": 0.5217391304347827,
+    "correccion_factual": "si",
+    "completitud": "si",
+    "contradiccion": "no",
+    "nota": "Los 2655 registros con Churn=0 coinciden con el conteo local."
+  },
+  {
+    "id": "nulos",
+    "grupo": "cinco_mayores",
+    "f1": 0.6,
+    "correccion_factual": "si",
+    "completitud": "si",
+    "contradiccion": "no",
+    "nota": "Declara cero nulos, consistente con las catorce columnas del perfil."
+  }
+]

@@ -1,0 +1,102 @@
+[
+  {
+    "id": "filas",
+    "consulta": "¿Cuántos registros contiene la tabla?",
+    "referencia": "La tabla contiene 3150 registros."
+  },
+  {
+    "id": "columnas",
+    "consulta": "¿Cuántas columnas hay, incluyendo el objetivo?",
+    "referencia": "Hay 14 columnas incluyendo Churn."
+  },
+  {
+    "id": "objetivo",
+    "consulta": "¿Cuál es la variable objetivo y qué representa su clase positiva?",
+    "referencia": "El objetivo es Churn y la clase positiva 1 significa abandono."
+  },
+  {
+    "id": "nulos",
+    "consulta": "¿Cuántos valores nulos se observaron?",
+    "referencia": "Se observaron 0 valores nulos en la tabla."
+  },
+  {
+    "id": "imputacion",
+    "consulta": "¿Hace falta imputar nulos en este archivo?",
+    "referencia": "No se necesita imputación por valores faltantes porque no se observaron nulos."
+  },
+  {
+    "id": "positivos",
+    "consulta": "¿Cuántos clientes pertenecen a Churn igual a 1?",
+    "referencia": "Hay 495 registros con Churn igual a 1."
+  },
+  {
+    "id": "negativos",
+    "consulta": "¿Cuántos clientes pertenecen a Churn igual a 0?",
+    "referencia": "Hay 2655 registros con Churn igual a 0."
+  },
+  {
+    "id": "balance",
+    "consulta": "¿Qué porcentaje representa la clase positiva? Redondea a dos decimales.",
+    "referencia": "La clase positiva representa el 15.71% de los registros."
+  },
+  {
+    "id": "desbalance",
+    "consulta": "¿Las clases tienen la misma frecuencia?",
+    "referencia": "No. La clase 0 es mayoritaria y la clase 1 es minoritaria."
+  },
+  {
+    "id": "duplicados",
+    "consulta": "¿Cuántas filas repetidas adicionales detecta el perfil?",
+    "referencia": "Se detectan 300 filas duplicadas adicionales."
+  },
+  {
+    "id": "identidad",
+    "consulta": "¿Las filas idénticas demuestran que son el mismo cliente?",
+    "referencia": "No. Sin un identificador verificable no se puede confirmar que sean el mismo cliente."
+  },
+  {
+    "id": "particion",
+    "consulta": "¿Cómo evitar que filas idénticas aparezcan en entrenamiento y prueba?",
+    "referencia": "Agrupar las filas con los mismos predictores y mantener cada grupo en una sola partición."
+  },
+  {
+    "id": "ventana",
+    "consulta": "¿Cuál es la ventana de observación y el horizonte documentado?",
+    "referencia": "Los atributos agregan los primeros 9 meses y el abandono se observa al mes 12, con una brecha de 3 meses."
+  },
+  {
+    "id": "fechas",
+    "consulta": "¿Permite este CSV verificar una partición cronológica?",
+    "referencia": "No. El CSV no contiene fechas individuales para verificar una partición cronológica."
+  },
+  {
+    "id": "tarifa",
+    "consulta": "¿Tariff Plan es una cantidad continua solo por estar almacenada como entero?",
+    "referencia": "No. Tariff Plan es una variable categórica codificada con los valores 1 y 2."
+  },
+  {
+    "id": "cargo",
+    "consulta": "¿El rango observado de Charge Amount respeta el dominio documentado 0 a 9?",
+    "referencia": "No. El máximo observado es 10, fuera del dominio documentado de 0 a 9."
+  },
+  {
+    "id": "uso",
+    "consulta": "¿Cuál es el rango observado de Seconds of Use?",
+    "referencia": "Seconds of Use varía entre 0 y 17090."
+  },
+  {
+    "id": "ajuste",
+    "consulta": "¿Dónde se ajustan los imputadores y escaladores durante la validación?",
+    "referencia": "Los imputadores y escaladores se ajustan solo con entrenamiento y se aplican después a validación o prueba."
+  },
+  {
+    "id": "metricas",
+    "consulta": "¿Basta con accuracy para evaluar este problema desbalanceado?",
+    "referencia": "No. Conviene evaluar precisión, recall y F1 de la clase positiva y PR-AUC, además de la matriz de confusión."
+  },
+  {
+    "id": "resultados",
+    "consulta": "¿Qué rendimiento predictivo ha demostrado el perfilado?",
+    "referencia": "Ninguno. El perfilado no entrena modelos ni demuestra rendimiento predictivo."
+  }
+]

@@ -1,0 +1,213 @@
+{
+  "dataset_id": "iranian_churn",
+  "fuente": "https://archive.ics.uci.edu/dataset/563/iranian+churn+dataset",
+  "contexto": {
+    "unidad": "Una fila por registro de cliente; sin identificador verificable en el CSV",
+    "objetivo_negocio": "Predecir abandono de clientes de telecomunicaciones",
+    "columna_objetivo": "Churn",
+    "clase_positiva": 1,
+    "significado": {
+      "0": "no abandona",
+      "1": "abandona"
+    },
+    "ventana": "Atributos de los primeros 9 meses; abandono al mes 12; brecha de 3 meses (UCI)",
+    "limite_temporal": "El CSV no contiene fechas individuales: no permite verificar un corte cronológico",
+    "codigos_categoricos": {
+      "Complains": [
+        0,
+        1
+      ],
+      "Age Group": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "Tariff Plan": [
+        1,
+        2
+      ],
+      "Status": [
+        1,
+        2
+      ],
+      "Charge Amount": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ]
+    }
+  },
+  "filas": 3150,
+  "columnas_total": 14,
+  "duplicados_exactos_adicionales": 300,
+  "registros_en_grupos_duplicados": 465,
+  "columnas": [
+    {
+      "nombre": "Call Failure",
+      "tipo_observado": "int64",
+      "nulos": 0,
+      "nulos_pct": 0.0,
+      "distintos": 37,
+      "minimo": 0.0,
+      "maximo": 36.0,
+      "mediana": 6.0
+    },
+    {
+      "nombre": "Complains",
+      "tipo_observado": "int64",
+      "nulos": 0,
+      "nulos_pct": 0.0,
+      "distintos": 2,
+      "minimo": 0.0,
+      "maximo": 1.0,
+      "mediana": 0.0,
+      "valores_fuera_de_dominio": 0
+    },
+    {
+      "nombre": "Subscription Length",
+      "tipo_observado": "int64",
+      "nulos": 0,
+      "nulos_pct": 0.0,
+      "distintos": 45,
+      "minimo": 3.0,
+      "maximo": 47.0,
+      "mediana": 35.0
+    },
+    {
+      "nombre": "Charge Amount",
+      "tipo_observado": "int64",
+      "nulos": 0,
+      "nulos_pct": 0.0,
+      "distintos": 11,
+      "minimo": 0.0,
+      "maximo": 10.0,
+      "mediana": 0.0,
+      "valores_fuera_de_dominio": 7
+    },
+    {
+      "nombre": "Seconds of Use",
+      "tipo_observado": "int64",
+      "nulos": 0,
+      "nulos_pct": 0.0,
+      "distintos": 1756,
+      "minimo": 0.0,
+      "maximo": 17090.0,
+      "mediana": 2990.0
+    },
+    {
+      "nombre": "Frequency of use",
+      "tipo_observado": "int64",
+      "nulos": 0,
+      "nulos_pct": 0.0,
+      "distintos": 242,
+      "minimo": 0.0,
+      "maximo": 255.0,
+      "mediana": 54.0
+    },
+    {
+      "nombre": "Frequency of SMS",
+      "tipo_observado": "int64",
+      "nulos": 0,
+      "nulos_pct": 0.0,
+      "distintos": 405,
+      "minimo": 0.0,
+      "maximo": 522.0,
+      "mediana": 21.0
+    },
+    {
+      "nombre": "Distinct Called Numbers",
+      "tipo_observado": "int64",
+      "nulos": 0,
+      "nulos_pct": 0.0,
+      "distintos": 92,
+      "minimo": 0.0,
+      "maximo": 97.0,
+      "mediana": 21.0
+    },
+    {
+      "nombre": "Age Group",
+      "tipo_observado": "int64",
+      "nulos": 0,
+      "nulos_pct": 0.0,
+      "distintos": 5,
+      "minimo": 1.0,
+      "maximo": 5.0,
+      "mediana": 3.0,
+      "valores_fuera_de_dominio": 0
+    },
+    {
+      "nombre": "Tariff Plan",
+      "tipo_observado": "int64",
+      "nulos": 0,
+      "nulos_pct": 0.0,
+      "distintos": 2,
+      "minimo": 1.0,
+      "maximo": 2.0,
+      "mediana": 1.0,
+      "valores_fuera_de_dominio": 0
+    },
+    {
+      "nombre": "Status",
+      "tipo_observado": "int64",
+      "nulos": 0,
+      "nulos_pct": 0.0,
+      "distintos": 2,
+      "minimo": 1.0,
+      "maximo": 2.0,
+      "mediana": 1.0,
+      "valores_fuera_de_dominio": 0
+    },
+    {
+      "nombre": "Age",
+      "tipo_observado": "int64",
+      "nulos": 0,
+      "nulos_pct": 0.0,
+      "distintos": 5,
+      "minimo": 15.0,
+      "maximo": 55.0,
+      "mediana": 30.0
+    },
+    {
+      "nombre": "Customer Value",
+      "tipo_observado": "float64",
+      "nulos": 0,
+      "nulos_pct": 0.0,
+      "distintos": 2654,
+      "minimo": 0.0,
+      "maximo": 2165.28,
+      "mediana": 228.48
+    },
+    {
+      "nombre": "Churn",
+      "tipo_observado": "int64",
+      "nulos": 0,
+      "nulos_pct": 0.0,
+      "distintos": 2,
+      "minimo": 0.0,
+      "maximo": 1.0,
+      "mediana": 0.0
+    }
+  ],
+  "objetivo": {
+    "columna": "Churn",
+    "clase_positiva": 1,
+    "conteos": {
+      "0": 2655,
+      "1": 495
+    },
+    "porcentajes": {
+      "0": 84.2857,
+      "1": 15.7143
+    }
+  },
+  "sha256_csv": "90d5fb6bd1630cd4de4b4d28fcf8b4cb92a8f6ab7484605b0799d47386f7dbe1"
+}
