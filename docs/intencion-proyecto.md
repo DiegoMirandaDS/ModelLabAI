@@ -15,4 +15,4 @@ Solo se envían estadísticas agregadas del dataset de demostración. Las herram
 
 Los bloques 15–17 miden coincidencia léxica de respuestas reales y la contrastan con una revisión cualitativa. Los bloques 18–20 verifican dependencias entre pasos, rutas y recuperación ante fallos. El bloque 21 verifica la selección de dos herramientas y una consulta general sin herramientas.
 
-La evaluación predictiva es distinta: un F1 de texto no mide capacidad para predecir abandono. El [dataset](dataset.md) y los [límites de la métrica](limites_metrica.md) explican esta separación.
+La evaluación predictiva es distinta: un F1 de texto no mide capacidad para predecir abandono. El [dataset](datos-prueba-iranian-churn.md) y los [límites de la métrica](bloque-17-core-limites-metrica.md) explican esta separación.

@@ -1,6 +1,6 @@
-# Dataset y controles de calidad
+# Iranian Churn: datos reales de prueba y controles de calidad
 
-Se usa [Iranian Churn, UCI](https://archive.ics.uci.edu/dataset/563/iranian+churn+dataset), con licencia CC BY 4.0. La atribución y la huella del archivo están en [data](../data/README.md). Es una muestra histórica de telecomunicaciones; no acredita comportamiento actual ni resultados para clientes de otra empresa.
+La demostración de los bloques 15–21 usa [Iranian Churn, UCI](https://archive.ics.uci.edu/dataset/563/iranian+churn+dataset), con licencia CC BY 4.0. La atribución y la huella del archivo están en [data](../data/README.md). Es una muestra histórica de telecomunicaciones; no acredita comportamiento actual ni resultados para clientes de otra empresa.
 
 ## Resultados del perfilado
 

@@ -61,14 +61,14 @@ python -m src.demo --evidencias --consultar
 
 Los comandos conservan resultados ya completados para el mismo modelo y entrada. La revisión cualitativa es un registro de la muestra evaluada; no se reemplaza con una puntuación automática.
 
-## Documentación de la entrega
+## Documentación
 
-- [Requisitos, implementación y verificación de los bloques 15–21](docs/bloques-15-21.md).
-- [Dataset y hallazgos de calidad](docs/dataset.md).
-- [Límites de la métrica y revisión de respuestas — core 17](docs/limites_metrica.md).
-- [Chains, recuperación y herramientas — core 20 y práctica 21](docs/orquestacion.md).
+El [índice de documentación](docs/README.md) organiza el material por tema, bloque y tipo de actividad. Incluye las entregas anteriores y un [índice de evidencias](docs/evidencias/README.md).
 
-Se conserva la evidencia previa: [cliente y pruebas del bloque 14](docs/entrega-bloque-14.md), [ensayo de rate limit del bloque 13](docs/ensayo-bloque-13.md) y [comparación histórica de modelos](docs/comparacion_modelos.md). Los diagramas anteriores en `docs/` describen la arquitectura histórica.
+- [Iranian Churn: datos reales de prueba](docs/datos-prueba-iranian-churn.md).
+- [Revisión y límites de las métricas — core 17](docs/bloque-17-core-limites-metrica.md).
+- [Verificación de la orquestación — core 20](docs/bloque-20-core-verificacion-orquestacion.md).
+- [Agente con herramientas — práctica 21](docs/bloque-21-practica-agente-herramientas.md).
 
 ## Autor
 
